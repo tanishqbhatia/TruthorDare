@@ -18,10 +18,13 @@ public class Cons {
     public static final String APP_NAME = App.get().getResources().getString(R.string.app_name);
     public static final String APP_DESCRIPTION = App.get().getResources().getString(R.string.app_description);
     public static final int APP_LOGO = R.mipmap.ic_launcher;
+
     public static final int GREY_50 = ContextCompat.getColor(App.get(), R.color.grey_50);
     public static final int GREY_500 = ContextCompat.getColor(App.get(), R.color.grey_500);
     public static final int GREY_700 = ContextCompat.getColor(App.get(), R.color.grey_700);
+    public static final int GREY_900 = ContextCompat.getColor(App.get(), R.color.grey_900);
     public static final int BLACK = ContextCompat.getColor(App.get(), R.color.black);
+    public static final int WHITE = ContextCompat.getColor(App.get(), R.color.white);
 
     public static final int NAVIGATION_HOME = 0;
     public static final int NAVIGATION_SEARCH = 1;

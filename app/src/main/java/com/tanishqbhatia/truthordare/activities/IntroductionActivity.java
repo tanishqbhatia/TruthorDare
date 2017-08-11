@@ -2,7 +2,7 @@ package com.tanishqbhatia.truthordare.activities;
 
 import android.os.Bundle;
 
-import com.github.paolorotolo.appintro.AppIntro2;
+import com.github.paolorotolo.appintro.AppIntro;
 import com.github.paolorotolo.appintro.AppIntroFragment;
 import com.github.paolorotolo.appintro.model.SliderPage;
 import com.tanishqbhatia.truthordare.utils.Cons;
@@ -13,7 +13,7 @@ import com.tanishqbhatia.truthordare.utils.Cons;
  * Contact number : +919780702709
  */
 
-public class IntroductionActivity extends AppIntro2 {
+public class IntroductionActivity extends AppIntro {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,12 +23,17 @@ public class IntroductionActivity extends AppIntro2 {
         sliderPage.setDescription(Cons.APP_DESCRIPTION);
         sliderPage.setImageDrawable(Cons.APP_LOGO);
         sliderPage.setBgColor(Cons.GREY_50);
-        addSlide(AppIntroFragment.newInstance(sliderPage));
         sliderPage.setTitleColor(Cons.BLACK);
         sliderPage.setDescColor(Cons.GREY_700);
         addSlide(AppIntroFragment.newInstance(sliderPage));
         addSlide(AppIntroFragment.newInstance(sliderPage));
         addSlide(AppIntroFragment.newInstance(sliderPage));
+        addSlide(AppIntroFragment.newInstance(sliderPage));
         setFadeAnimation();
+        setColorSkipButton(Cons.BLACK);
+        setColorDoneText(Cons.BLACK);
+
     }
+
+
 }
