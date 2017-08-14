@@ -66,11 +66,4 @@ public class Toast {
             return toastBuilder;
         } else return null;
     }
-
-    /*public static ToastBuilder show() {
-        if (toast_builder != null) {
-            toast_builder.show();
-            return toast_builder;
-        } else return null;
-    }*/
 }

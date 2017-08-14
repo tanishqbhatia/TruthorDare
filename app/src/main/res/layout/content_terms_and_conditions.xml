@@ -12,7 +12,7 @@
         android:id="@+id/termsAndConditionsSv"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/acceptTnCCb"
+        app:layout_constraintBottom_toTopOf="@+id/acceptTnCCbLl"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -20,19 +20,29 @@
         <TextView
             android:id="@+id/termsAndConditionsTv"
             android:layout_width="match_parent"
-            android:layout_margin="8dp"
             android:layout_height="wrap_content"
+            android:layout_margin="8dp"
             android:textColor="@color/grey_900" />
     </ScrollView>
 
-    <android.support.v7.widget.AppCompatCheckBox
-        android:id="@+id/acceptTnCCb"
+    <LinearLayout
+        android:id="@+id/acceptTnCCbLl"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:padding="16dp"
-        android:text="@string/acceptTnC"
+        android:background="@color/red_500"
+        android:padding="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintRight_toRightOf="parent">
+
+        <android.support.v7.widget.AppCompatCheckBox
+            android:id="@+id/acceptTnCCb"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="@string/acceptTnC"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            app:buttonTint="@color/white" />
+    </LinearLayout>
 </android.support.constraint.ConstraintLayout>

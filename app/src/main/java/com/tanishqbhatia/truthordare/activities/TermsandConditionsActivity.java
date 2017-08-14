@@ -10,10 +10,15 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.CompoundButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.tanishqbhatia.truthordare.R;
+import com.tanishqbhatia.truthordare.utils.Cons;
 import com.tanishqbhatia.truthordare.utils.Methods;
+import com.tanishqbhatia.truthordare.utils.toast.Toast;
+import com.transitionseverywhere.Recolor;
+import com.transitionseverywhere.TransitionManager;
 
 import butterknife.BindView;
 
@@ -25,6 +30,8 @@ public class TermsandConditionsActivity extends AppCompatActivity {
     Toolbar toolbar;
     @BindView(R.id.acceptTnCCb)
     AppCompatCheckBox acceptTnCCb;
+    @BindView(R.id.acceptTnCCbLl)
+    LinearLayout acceptTnCCbLl;
     private boolean areTnCAccepted = false;
 
     @Override
@@ -35,6 +42,11 @@ public class TermsandConditionsActivity extends AppCompatActivity {
         setupToolbar();
         displayTnC();
         addListeners();
+        showHelperToast();
+    }
+
+    private void showHelperToast() {
+        Toast.color(R.color.blue_500).duration(Toast.LENGTH_LONG).message("Please read these and accept the terms and conditions in order to continue.").show();
     }
 
     private void addListeners() {
@@ -42,7 +54,10 @@ public class TermsandConditionsActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 areTnCAccepted = isChecked;
+                TransitionManager.beginDelayedTransition(acceptTnCCbLl, new Recolor());
+                acceptTnCCbLl.setBackgroundColor(isChecked ? Cons.GREEN_500 : Cons.RED_500);
                 invalidateOptionsMenu();
+
             }
         });
     }
@@ -71,7 +86,7 @@ public class TermsandConditionsActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_continue:
-
+                Methods.launch(this, SignUpActivity.class);
                 break;
         }
         return true;

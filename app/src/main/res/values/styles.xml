@@ -4,14 +4,11 @@
         <item name="colorPrimary">@color/grey_50</item>
         <item name="colorPrimaryDark">#c7c7c7</item>
         <item name="colorAccent">@color/black</item>
-    </style>
-
-    <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="AppTheme.NoActionBar.Fullscreen">
+    <style name="AppTheme.Fullscreen">
         <item name="android:windowFullscreen">true</item>
     </style>
 
