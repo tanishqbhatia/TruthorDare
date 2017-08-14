@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import com.tanishqbhatia.truthordare.App;
 import com.tanishqbhatia.truthordare.activities.IntroductionActivity;
@@ -26,15 +25,6 @@ public class Methods {
             builder.append(", ");
         }
         Log.i(TAG, builder.toString());
-    }
-
-    public static void showToast(String... messages) {
-        StringBuilder builder = new StringBuilder();
-        for (String message : messages) {
-            builder.append(message);
-            builder.append(", ");
-        }
-        Toast.makeText(App.get(), builder.toString(), Toast.LENGTH_SHORT).show();
     }
 
     public static Context init(Activity activity) {
@@ -64,8 +54,13 @@ public class Methods {
     public static void cleanSlateProtocol() {
         Prefs.clear();
         Intent intent = new Intent(App.get(), IntroductionActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         App.get().startActivity(intent);
+    }
+
+    public static void launch(Activity sourceActivity, Class targetClass) {
+        sourceActivity.startActivity(new Intent(sourceActivity, targetClass));
     }
 }

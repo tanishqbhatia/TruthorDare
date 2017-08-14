@@ -95,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
         Methods.init(this);
         if(!PrefsMethods.isIdentified()) {
             Methods.cleanSlateProtocol();
+            finish();
         }
         setSupportActionBar(toolbar);
         setListeners();

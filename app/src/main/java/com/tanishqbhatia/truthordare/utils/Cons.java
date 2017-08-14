@@ -19,12 +19,23 @@ public class Cons {
     public static final String APP_DESCRIPTION = App.get().getResources().getString(R.string.app_description);
     public static final int APP_LOGO = R.mipmap.ic_launcher;
 
+    public static final String TRUTH = App.get().getResources().getString(R.string.truth);
+    public static final String TRUTH_DESCRIPTION = App.get().getResources().getString(R.string.truth_description);
+    public static final int TRUTH_LOGO = R.mipmap.ic_launcher;
+
+    public static final String DARE = App.get().getResources().getString(R.string.dare);
+    public static final String DARE_DESCRIPTION = App.get().getResources().getString(R.string.dare_description);
+    public static final int DARE_LOGO = R.mipmap.ic_launcher;
+
     public static final int GREY_50 = ContextCompat.getColor(App.get(), R.color.grey_50);
     public static final int GREY_500 = ContextCompat.getColor(App.get(), R.color.grey_500);
     public static final int GREY_700 = ContextCompat.getColor(App.get(), R.color.grey_700);
     public static final int GREY_900 = ContextCompat.getColor(App.get(), R.color.grey_900);
     public static final int BLACK = ContextCompat.getColor(App.get(), R.color.black);
     public static final int WHITE = ContextCompat.getColor(App.get(), R.color.white);
+    public static final int BLUE_500 = ContextCompat.getColor(App.get(), R.color.blue_500);
+    public static final int RED_500 = ContextCompat.getColor(App.get(), R.color.red_500);
+    public static final int GREEN_500 = ContextCompat.getColor(App.get(), R.color.green_500);
 
     public static final int NAVIGATION_HOME = 0;
     public static final int NAVIGATION_SEARCH = 1;

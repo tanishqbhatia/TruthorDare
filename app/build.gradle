@@ -33,11 +33,12 @@ dependencies {
     compile 'org.greenrobot:eventbus:3.0.0'
     compile 'com.android.support:design:26.0.0-alpha1'
     compile 'com.android.support:support-vector-drawable:26.0.0-alpha1'
+    compile 'com.github.apl-devs:appintro:v4.2.2'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
     testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.1'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.0.0-RC1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.7.0'
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5.1'
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.1'
-    compile 'com.github.apl-devs:appintro:v4.2.2'
 }
