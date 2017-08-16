@@ -97,9 +97,13 @@ public class MainActivity extends AppCompatActivity {
             Methods.cleanSlateProtocol();
             finish();
         }
-        setSupportActionBar(toolbar);
+        setToolbar();
         setListeners();
         setAdapters();
+    }
+
+    private void setToolbar() {
+        setSupportActionBar(toolbar);
     }
 
     private void setAdapters() {

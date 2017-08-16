@@ -7,6 +7,7 @@ package com.tanishqbhatia.truthordare.utils.constants;
  */
 
 public class WebsiteCons {
-    public final String WEBSITE_URL = "";
-    public final String CHECK_SERVER = "";
+    public static final String WEBSITE_URL_ORIGINAL = "http://tanishqbhatia.000webhostapp.com/TruthorDare/";
+    public static final String WEBSITE_URL = "https://goo.gl/NUY7AB";
+    public static final String IDENTIFY = "identify.php";
 }

@@ -6,6 +6,6 @@ package com.tanishqbhatia.truthordare.utils.constants;
  * Contact number : +919780702709
  */
 
-class RequestCons {
-    static final String INSTAGRAM_LOGIN_REQUEST_CODE = "0798";
+public class RequestCons {
+   public static final int INSTAGRAM_LOGIN_REQUEST_CODE = 1;
 }

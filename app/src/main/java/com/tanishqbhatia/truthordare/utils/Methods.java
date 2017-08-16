@@ -2,13 +2,20 @@ package com.tanishqbhatia.truthordare.utils;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.tanishqbhatia.truthordare.App;
+import com.tanishqbhatia.truthordare.R;
 import com.tanishqbhatia.truthordare.activities.IntroductionActivity;
 import com.tanishqbhatia.truthordare.utils.prefs.Prefs;
+import com.transitionseverywhere.Recolor;
+import com.transitionseverywhere.TransitionManager;
 
 import butterknife.ButterKnife;
 
@@ -23,9 +30,10 @@ public class Methods {
         StringBuilder builder = new StringBuilder();
         for (String message : messages) {
             builder.append(message);
-            builder.append(", ");
+            builder.append("\n");
         }
-        Log.i(TAG, builder.toString());
+        String message = builder.substring(0, builder.lastIndexOf("\n"));
+        Log.i(TAG, message);
     }
 
     public static Context init(Activity activity) {
@@ -35,33 +43,56 @@ public class Methods {
     }
 
     public static void visible(View view) {
-        if(view != null) {
-            if(view.getVisibility() != View.VISIBLE) view.setVisibility(View.VISIBLE);
+        if (view != null) {
+            if (view.getVisibility() != View.VISIBLE) view.setVisibility(View.VISIBLE);
         }
     }
 
     public static void invisible(View view) {
-        if(view != null) {
-            if(view.getVisibility() != View.INVISIBLE) view.setVisibility(View.INVISIBLE);
+        if (view != null) {
+            if (view.getVisibility() != View.INVISIBLE) view.setVisibility(View.INVISIBLE);
         }
     }
 
     public static void gone(View view) {
-        if(view != null) {
-            if(view.getVisibility() != View.GONE) view.setVisibility(View.GONE);
+        if (view != null) {
+            if (view.getVisibility() != View.GONE) view.setVisibility(View.GONE);
+        }
+    }
+
+    public static void enable(View view) {
+        if (view != null) {
+            if (!view.isEnabled()) view.setEnabled(true);
+        }
+    }
+
+    public static void disable(View view) {
+        if (view != null) {
+            if (view.isEnabled()) view.setEnabled(false);
         }
     }
 
     public static void cleanSlateProtocol() {
-        Prefs.clear();
-        Intent intent = new Intent(App.get(), IntroductionActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        App.get().startActivity(intent);
+        AlertDialog.Builder builder = new AlertDialog.Builder(App.get());
+        builder.setCancelable(false).setMessage(R.string.notIdentified)
+                .setPositiveButton(R.string.okay, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        Prefs.clear();
+                        Intent intent = new Intent(App.get(), IntroductionActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        App.get().startActivity(intent);
+                    }
+                }).create();
     }
 
     public static void launch(Activity sourceActivity, Class targetClass) {
         sourceActivity.startActivity(new Intent(sourceActivity, targetClass));
+    }
+
+    public static void changeBackground(View view, int color) {
+        TransitionManager.beginDelayedTransition((ViewGroup) view.getParent(), new Recolor());
+        view.setBackground(new ColorDrawable(color));
     }
 }

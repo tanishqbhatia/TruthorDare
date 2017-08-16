@@ -1,6 +1,5 @@
 package com.tanishqbhatia.truthordare.utils.toast;
 
-import android.app.Activity;
 import android.view.Gravity;
 
 import com.tanishqbhatia.truthordare.App;
@@ -15,54 +14,50 @@ import com.tanishqbhatia.truthordare.R;
 
 public class Toast {
     private static Toast toast;
-    private Activity activity;
+    //private static Activity activity;
     public static final int HIGH_PRIORITY = ToastBuilder.PRIORITY_HIGH;
     public static final int NORMAL_PRIORITY = ToastBuilder.PRIORITY_NORMAL;
     public static final int LOW_PRIORITY = ToastBuilder.PRIORITY_LOW;
     public static final int LENGTH_SHORT = 3000;
     public static final int LENGTH_LONG = 5000;
     public static final int LENGTH_STICKY = -1;
-    private int priority = NORMAL_PRIORITY;
-    private int duration = LENGTH_SHORT;
-    private int color = R.color.blue_500;
+    private static int priority = NORMAL_PRIORITY;
+    private static int duration = LENGTH_SHORT;
+    private static int color = R.color.blue_500;
 
-    private Toast(Activity activity) {
-        this.activity = activity;
-    }
+    /*private Toast(Activity toast_activity) {
+        activity = toast_activity;
+    }*/
 
-    public static Toast priority(int priority) {
-        if (toast == null)
-            toast = new Toast(App.get().getCurrentActivity());
-        toast.priority = priority;
+    public static Toast priority(int activity_priority) {
+        priority = activity_priority;
         return toast;
     }
 
-    public static Toast duration(int duration) {
-        if (toast == null)
-            toast = new Toast(App.get().getCurrentActivity());
-        toast.duration = duration;
+    public static Toast duration(int activity_duration) {
+        duration = activity_duration;
         return toast;
     }
 
-    public static Toast color(int color) {
-        if (toast == null)
-            toast = new Toast(App.get().getCurrentActivity());
-        toast.color = color;
+    public static Toast color(int activity_color) {
+        color = activity_color;
         return toast;
     }
 
     public static ToastBuilder message(String... messages) {
+/*        if (activity != App.get().getCurrentActivity())
+            toast = new Toast(App.get().getCurrentActivity());*/
         if (messages != null) {
             StringBuilder builder = new StringBuilder();
             for (String message : messages) {
                 builder.append(message);
-                builder.append(", ");
+                builder.append("\n");
             }
-            String message = builder.substring(0, builder.lastIndexOf(","));
-            ToastBuilder.Style style = new ToastBuilder.Style(toast.duration, toast.color);
-            ToastBuilder toastBuilder = ToastBuilder.makeText(toast.activity, message, style);
+            String message = builder.substring(0, builder.lastIndexOf("\n"));
+            ToastBuilder.Style style = new ToastBuilder.Style(duration, color);
+            ToastBuilder toastBuilder = ToastBuilder.makeText(App.get().getCurrentActivity(), message, style);
             toastBuilder.setLayoutGravity(Gravity.BOTTOM);
-            toastBuilder.setPriority(toast.priority);
+            toastBuilder.setPriority(priority);
             return toastBuilder;
         } else return null;
     }

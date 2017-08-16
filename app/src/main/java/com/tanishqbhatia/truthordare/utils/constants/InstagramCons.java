@@ -13,6 +13,7 @@ public class InstagramCons {
     private static final String INSTAGRAM_CLIENT_ID = App.get().getResources().getString(R.string.instagram_client_id);
     private static final String INSTAGRAM_CLIENT_SECRET = App.get().getResources().getString(R.string.instagram_client_secret);
     private static final String INSTAGRAM_CALLBACK_URL = App.get().getResources().getString(R.string.instagram_callback_url);
+    private static final String INSTAGRAM_CALLBACK_URL_ORIGINAL = App.get().getResources().getString(R.string.instagram_callback_url_original);
 
     private static final String INSTAGRAM_LOGIN_URL_PREFIX = "https://api.instagram.com/oauth/authorize/?";
 
@@ -31,7 +32,7 @@ public class InstagramCons {
     private static final String SCOPE_RELATIONSHIPS = "relationships";
     private static final String SCOPE_LIKES = "likes";
 
-    public static final String INSTAGRAM_LOGIN_URL = INSTAGRAM_LOGIN_URL_PREFIX
+    /*public static final String INSTAGRAM_LOGIN_URL = INSTAGRAM_LOGIN_URL_PREFIX
             .concat(URL_CLIENT_ID)
             .concat(INSTAGRAM_CLIENT_ID)
             .concat(AND)
@@ -52,5 +53,5 @@ public class InstagramCons {
             .concat(PLUS)
             .concat(SCOPE_RELATIONSHIPS)
             .concat(PLUS)
-            .concat(SCOPE_LIKES);
+            .concat(SCOPE_LIKES);*/
 }

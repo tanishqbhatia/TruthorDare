@@ -8,4 +8,5 @@ package com.tanishqbhatia.truthordare.utils.constants;
 
 public class PrefsCons {
     public static final String IDENTIFIED = "identified";
+    public static final String ACCESS_TOKEN = "access_token";
 }

@@ -4,8 +4,13 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.ContextWrapper;
 
+import com.tanishqbhatia.truthordare.interfaces.Server;
 import com.tanishqbhatia.truthordare.utils.Methods;
+import com.tanishqbhatia.truthordare.utils.constants.WebsiteCons;
 import com.tanishqbhatia.truthordare.utils.prefs.Prefs;
+
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by Tanishq Bhatia on 09-08-2017 at 17:03.
@@ -16,9 +21,11 @@ import com.tanishqbhatia.truthordare.utils.prefs.Prefs;
 public class App extends Application {
     private static App instance;
     private Activity currentActivity;
+    private Retrofit retrofit;
+    private Server server;
 
     public static synchronized App get() {
-        if(instance == null) {
+        if (instance == null) {
             instance = new App();
             Methods.showLog("App", "get()", "Initialized instance.");
         }
@@ -30,6 +37,30 @@ public class App extends Application {
         super.onCreate();
         instance = this;
         initPrefs();
+        initRetrofit();
+        initServer();
+    }
+
+    private void initRetrofit() {
+        if (retrofit == null) {
+            retrofit = new Retrofit.Builder()
+                    .baseUrl(WebsiteCons.WEBSITE_URL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+        }
+    }
+
+    private void initServer() {
+        if(retrofit == null)
+            initRetrofit();
+        if (server == null)
+            server = retrofit.create(Server.class);
+    }
+
+    public Server getServer() {
+        if (server == null)
+            initServer();
+        return server;
     }
 
     private void initPrefs() {

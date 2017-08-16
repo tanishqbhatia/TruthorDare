@@ -290,4 +290,5 @@
     <color name="dark_bg_light_hint_text">#80FFFFFF</color>
 
     <color name="navigation_icons">@drawable/navigation_icons</color>
+    <color name="blackAlpha">#60000000</color>
 </resources>

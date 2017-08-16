@@ -9,11 +9,28 @@ import com.tanishqbhatia.truthordare.utils.constants.PrefsCons;
  */
 
 public class PrefsMethods {
-    public static void setIndentified() {
+    public static void setIdentified() {
         Prefs.putBoolean(PrefsCons.IDENTIFIED, true);
+    }
+
+    public static void setNotIdentified() {
+        Prefs.putBoolean(PrefsCons.IDENTIFIED, false);
     }
 
     public static Boolean isIdentified() {
         return Prefs.getBoolean(PrefsCons.IDENTIFIED, false);
+    }
+
+
+    public static void saveAccessToken(String accessToken) {
+        Prefs.putString(PrefsCons.ACCESS_TOKEN, accessToken);
+    }
+
+    public static void removeAccessToken() {
+        Prefs.remove(PrefsCons.ACCESS_TOKEN);
+    }
+
+    public static String getAccessToken() {
+        return Prefs.getString(PrefsCons.ACCESS_TOKEN, "");
     }
 }
