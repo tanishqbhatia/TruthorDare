@@ -1,5 +1,6 @@
 package com.tanishqbhatia.truthordare.activities;
 
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -14,8 +15,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.tanishqbhatia.truthordare.R;
-import com.tanishqbhatia.truthordare.utils.Cons;
 import com.tanishqbhatia.truthordare.utils.Methods;
+import com.tanishqbhatia.truthordare.utils.constants.Cons;
 import com.tanishqbhatia.truthordare.utils.toast.Toast;
 import com.transitionseverywhere.Recolor;
 import com.transitionseverywhere.TransitionManager;
@@ -55,7 +56,7 @@ public class TermsandConditionsActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 areTnCAccepted = isChecked;
                 TransitionManager.beginDelayedTransition(acceptTnCCbLl, new Recolor());
-                acceptTnCCbLl.setBackgroundColor(isChecked ? Cons.GREEN_500 : Cons.RED_500);
+                acceptTnCCbLl.setBackground(new ColorDrawable(isChecked ? Cons.GREEN_500 : Cons.RED_500));
                 invalidateOptionsMenu();
 
             }

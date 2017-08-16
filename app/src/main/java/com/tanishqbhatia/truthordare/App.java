@@ -5,7 +5,7 @@ import android.app.Application;
 import android.content.ContextWrapper;
 
 import com.tanishqbhatia.truthordare.utils.Methods;
-import com.tanishqbhatia.truthordare.utils.Prefs;
+import com.tanishqbhatia.truthordare.utils.prefs.Prefs;
 
 /**
  * Created by Tanishq Bhatia on 09-08-2017 at 17:03.

@@ -1,4 +1,6 @@
-package com.tanishqbhatia.truthordare.utils;
+package com.tanishqbhatia.truthordare.utils.prefs;
+
+import com.tanishqbhatia.truthordare.utils.constants.PrefsCons;
 
 /**
  * Created by Tanishq Bhatia on 10-08-2017 at 10:40.
@@ -8,10 +10,10 @@ package com.tanishqbhatia.truthordare.utils;
 
 public class PrefsMethods {
     public static void setIndentified() {
-        Prefs.putBoolean(Cons.IDENTIFIED, true);
+        Prefs.putBoolean(PrefsCons.IDENTIFIED, true);
     }
 
     public static Boolean isIdentified() {
-        return Prefs.getBoolean(Cons.IDENTIFIED, false);
+        return Prefs.getBoolean(PrefsCons.IDENTIFIED, false);
     }
 }

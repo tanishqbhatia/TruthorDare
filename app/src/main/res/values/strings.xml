@@ -141,5 +141,5 @@
     <string name="title_activity_sign_up">Sign up</string>
     <string name="instagram_client_id">ef58c02b9dec4202b9503782c41d66bb</string>
     <string name="instagram_client_secret">be0bebd6b82d4631b78f256de66d4cd6</string>
-    <string name="instagram_callback_url"></string>
+    <string name="instagram_callback_url">http://tanishqbhatia.000webhostapp.com/TruthorDare/identify.php</string>
 </resources>

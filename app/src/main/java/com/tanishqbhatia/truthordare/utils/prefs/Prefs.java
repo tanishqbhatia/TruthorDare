@@ -1,4 +1,4 @@
-package com.tanishqbhatia.truthordare.utils;
+package com.tanishqbhatia.truthordare.utils.prefs;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;

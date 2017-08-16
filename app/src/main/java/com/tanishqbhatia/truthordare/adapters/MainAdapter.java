@@ -5,7 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.tanishqbhatia.truthordare.fragments.HomeFragment;
-import com.tanishqbhatia.truthordare.utils.Cons;
+import com.tanishqbhatia.truthordare.utils.constants.Cons;
 
 /**
  * Created by Tanishq Bhatia on 10-08-2017 at 13:57.

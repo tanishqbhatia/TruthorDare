@@ -8,6 +8,7 @@ import android.view.View;
 
 import com.tanishqbhatia.truthordare.App;
 import com.tanishqbhatia.truthordare.activities.IntroductionActivity;
+import com.tanishqbhatia.truthordare.utils.prefs.Prefs;
 
 import butterknife.ButterKnife;
 

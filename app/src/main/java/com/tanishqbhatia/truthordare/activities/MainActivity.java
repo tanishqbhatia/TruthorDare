@@ -12,9 +12,9 @@ import android.view.MenuItem;
 
 import com.tanishqbhatia.truthordare.R;
 import com.tanishqbhatia.truthordare.adapters.MainAdapter;
-import com.tanishqbhatia.truthordare.utils.Cons;
 import com.tanishqbhatia.truthordare.utils.Methods;
-import com.tanishqbhatia.truthordare.utils.PrefsMethods;
+import com.tanishqbhatia.truthordare.utils.constants.Cons;
+import com.tanishqbhatia.truthordare.utils.prefs.PrefsMethods;
 
 import java.lang.reflect.Field;
 

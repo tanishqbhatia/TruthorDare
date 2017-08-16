@@ -6,8 +6,8 @@ import android.support.v4.app.Fragment;
 import com.github.paolorotolo.appintro.AppIntro;
 import com.github.paolorotolo.appintro.AppIntroFragment;
 import com.github.paolorotolo.appintro.model.SliderPage;
-import com.tanishqbhatia.truthordare.utils.Cons;
 import com.tanishqbhatia.truthordare.utils.Methods;
+import com.tanishqbhatia.truthordare.utils.constants.Cons;
 
 /**
  * Created by Tanishq Bhatia on 11-08-2017 at 16:13.
