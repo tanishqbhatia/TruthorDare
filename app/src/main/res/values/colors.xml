@@ -273,8 +273,10 @@
     <color name="grey_700">#616161</color>
     <color name="grey_800">#424242</color>
     <color name="grey_900">#212121</color>
+    <color name="grey_dark">#c7c7c7</color>
 
     <color name="black">#000000</color>
+    <color name="black_95">#95000000</color>
     <color name="white">#FFFFFF</color>
 
     <!--Light Background Dark Text-->
@@ -290,5 +292,4 @@
     <color name="dark_bg_light_hint_text">#80FFFFFF</color>
 
     <color name="navigation_icons">@drawable/navigation_icons</color>
-    <color name="blackAlpha">#60000000</color>
 </resources>

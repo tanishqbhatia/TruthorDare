@@ -9,6 +9,7 @@ import com.tanishqbhatia.truthordare.utils.Methods;
 import com.tanishqbhatia.truthordare.utils.constants.WebsiteCons;
 import com.tanishqbhatia.truthordare.utils.prefs.Prefs;
 
+import io.realm.Realm;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -39,12 +40,17 @@ public class App extends Application {
         initPrefs();
         initRetrofit();
         initServer();
+        initRealm();
+    }
+
+    private void initRealm() {
+        Realm.init(instance);
     }
 
     private void initRetrofit() {
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
-                    .baseUrl(WebsiteCons.WEBSITE_URL)
+                    .baseUrl(WebsiteCons.WEBSITE_URL_ORIGINAL)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         }

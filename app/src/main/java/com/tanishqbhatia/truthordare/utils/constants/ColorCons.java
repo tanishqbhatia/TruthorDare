@@ -18,6 +18,7 @@ public class ColorCons {
     public static final int GREY_900 = ContextCompat.getColor(App.get(), R.color.grey_900);
 
     public static final int BLACK = ContextCompat.getColor(App.get(), R.color.black);
+    public static final int BLACK_95 = ContextCompat.getColor(App.get(), R.color.black_95);
     public static final int WHITE = ContextCompat.getColor(App.get(), R.color.white);
 
     public static final int BLUE_500 = ContextCompat.getColor(App.get(), R.color.blue_500);

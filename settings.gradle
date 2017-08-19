@@ -1,1 +1,1 @@
-include ':app'
+include ':app', ':backstack', ':instagramauthorization', ':recyclerview'

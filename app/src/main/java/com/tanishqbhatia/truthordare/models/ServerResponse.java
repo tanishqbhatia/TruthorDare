@@ -6,7 +6,7 @@ package com.tanishqbhatia.truthordare.models;
  * Contact number : +919780702709
  */
 
-public class Response {
+public class ServerResponse {
     private Boolean response;
 
     public Boolean getResponse() {

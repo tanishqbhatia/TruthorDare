@@ -1,21 +1,17 @@
 package com.tanishqbhatia.truthordare.utils;
 
+import android.animation.ArgbEvaluator;
+import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
-import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.tanishqbhatia.truthordare.App;
-import com.tanishqbhatia.truthordare.R;
 import com.tanishqbhatia.truthordare.activities.IntroductionActivity;
 import com.tanishqbhatia.truthordare.utils.prefs.Prefs;
-import com.transitionseverywhere.Recolor;
-import com.transitionseverywhere.TransitionManager;
 
 import butterknife.ButterKnife;
 
@@ -73,7 +69,7 @@ public class Methods {
     }
 
     public static void cleanSlateProtocol() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(App.get());
+/*        AlertDialog.Builder builder = new AlertDialog.Builder(App.get());
         builder.setCancelable(false).setMessage(R.string.notIdentified)
                 .setPositiveButton(R.string.okay, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
@@ -84,15 +80,31 @@ public class Methods {
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         App.get().startActivity(intent);
                     }
-                }).create();
+                }).create().show();*/
+
+        Prefs.clear();
+        Intent intent = new Intent(App.get(), IntroductionActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        App.get().startActivity(intent);
     }
 
     public static void launch(Activity sourceActivity, Class targetClass) {
         sourceActivity.startActivity(new Intent(sourceActivity, targetClass));
     }
 
-    public static void changeBackground(View view, int color) {
-        TransitionManager.beginDelayedTransition((ViewGroup) view.getParent(), new Recolor());
-        view.setBackground(new ColorDrawable(color));
+    public static void changeBackgroundColor(final View view, int targetColor, int duration) {
+        ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), ((ColorDrawable)view.getBackground()).getColor(), targetColor);
+        colorAnimation.setDuration(duration);
+        colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+
+            @Override
+            public void onAnimationUpdate(ValueAnimator animator) {
+                view.setBackgroundColor((int) animator.getAnimatedValue());
+            }
+
+        });
+        colorAnimation.start();
     }
 }

@@ -1,14 +1,14 @@
 apply plugin: 'com.android.application'
-
+apply plugin: 'realm-android'
 android {
-    compileSdkVersion 26
-    buildToolsVersion "26.0.1"
+    compileSdkVersion versions.compileSdk
+    buildToolsVersion versions.buildTools
     defaultConfig {
         applicationId "com.tanishqbhatia.truthordare"
-        minSdkVersion 16
-        targetSdkVersion 26
-        versionCode 0
-        versionName "Alpha 0.0"
+        minSdkVersion versions.minSdk
+        targetSdkVersion versions.targetSdk
+        versionCode versions.versionCode
+        versionName versions.versionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
@@ -20,27 +20,33 @@ android {
     }
 }
 
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:26.0.0-alpha1'
-    compile 'com.squareup.retrofit2:retrofit:2.3.0'
-    compile 'com.github.bumptech.glide:glide:4.0.0-RC1'
-    compile 'com.android.support:support-v4:26.0.0-alpha1'
-    compile 'com.jakewharton:butterknife:8.7.0'
-    compile 'org.greenrobot:eventbus:3.0.0'
-    compile 'com.android.support:design:26.0.0-alpha1'
-    compile 'com.android.support:support-vector-drawable:26.0.0-alpha1'
-    compile 'com.github.apl-devs:appintro:v4.2.2'
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    testCompile 'junit:junit:4.12'
-    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.1'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.0.0-RC1'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.7.0'
-    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5.1'
-    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.1'
-    compile "com.andkulikov:transitionseverywhere:1.7.5"
-    compile 'com.github.sayyam:instagramapi:0.1.0'
+
+    compile libraries.supportAppCompat
+    compile libraries.supportDesign
+    compile libraries.support
+    compile libraries.vectorDrawable
+    compile libraries.constraintLayout
+    compile libraries.supportCardView
+
+    compile libraries.retrofit
+    compile libraries.glide
+    annotationProcessor libraries.glideCompiler
+    compile libraries.butterknife
+    annotationProcessor libraries.butterknifeCompiler
+    compile libraries.eventbus
+    compile libraries.appintro
+    debugCompile libraries.leakcanary
+    testCompile libraries.leakcanaryNoOp
+    releaseCompile libraries.leakcanaryNoOp
+
+    compile project(path: ':instagramauthorization')
+
+    testCompile libraries.junit
+    compile 'com.android.support:support-v4:26.+'
 }

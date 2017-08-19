@@ -46,8 +46,8 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.navigation_notifications:
                     mContentVp.setCurrentItem(Cons.NAVIGATION_NOTIFICATIONS);
                     return true;
-                case R.id.navigation_profile:
-                    mContentVp.setCurrentItem(Cons.NAVIGATION_PROFILE);
+                case R.id.navigation_user:
+                    mContentVp.setCurrentItem(Cons.NAVIGATION_USER);
                     return true;
             }
             return false;
@@ -76,8 +76,8 @@ public class MainActivity extends AppCompatActivity {
                 case Cons.NAVIGATION_NOTIFICATIONS:
                     mNavigationBnv.setSelectedItemId(R.id.navigation_notifications);
                     break;
-                case Cons.NAVIGATION_PROFILE:
-                    mNavigationBnv.setSelectedItemId(R.id.navigation_profile);
+                case Cons.NAVIGATION_USER:
+                    mNavigationBnv.setSelectedItemId(R.id.navigation_user);
                     break;
             }
         }
@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Methods.init(this);
-        if(!PrefsMethods.isIdentified()) {
+        if(!PrefsMethods.isIdentified() || PrefsMethods.isIdentified()) {
             Methods.cleanSlateProtocol();
             finish();
         }

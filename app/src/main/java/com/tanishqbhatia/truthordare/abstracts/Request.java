@@ -1,13 +1,9 @@
 package com.tanishqbhatia.truthordare.abstracts;
 
 import android.app.Activity;
-import android.content.Context;
-import android.support.v7.app.AlertDialog;
-import android.view.LayoutInflater;
-import android.widget.Toast;
+import android.support.annotation.NonNull;
 
-import com.tanishqbhatia.truthordare.R;
-import com.tanishqbhatia.truthordare.interfaces.Server;
+import com.tanishqbhatia.truthordare.utils.dialogs.Loading;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -19,56 +15,51 @@ import retrofit2.Response;
 
 public abstract class Request<T> {
 
-    private Server server;
     private Call<T> call;
     private Activity activity;
-    private AlertDialog alertDialog;
-    private AlertDialog.Builder builder;
+    private Loading loading;
 
-    public Request(Server server, Call<T> call, Activity activity) {
-        this.server = server;
+    protected Request(Call<T> call, Activity activity) {
         this.call = call;
         this.activity = activity;
-        createLoadingView();
-        request(activity);
+        createLoading();
+        request();
     }
 
-    private void createLoadingView() {
-        alertDialog = new AlertDialog(activity.getBaseContext());
-        builder = new AlertDialog.Builder(activity);
-        LayoutInflater inflater = activity.getLayoutInflater();
-        builder.setView(inflater.inflate(R.layout.loading, null));
-        builder.create();
+    private void createLoading() {
+        loading = new Loading(activity);
     }
 
-    private void request(final Context context) {
+    private void request() {
         showLoading();
         call.enqueue(new Callback<T>() {
             @Override
-            public void onResponse(Call<T> call, Response<T> response) {
-                Toast.makeText(context, "Response received..", Toast.LENGTH_SHORT).show();
-                onResponse(call, response);
+            public void onResponse(@NonNull Call<T> call, @NonNull Response<T> response) {
+                hideLoading();
+                Request.this.onRequestCompleted();
+                Request.this.onResponse(call, response);
             }
 
             @Override
-            public void onFailure(Call<T> call, Throwable t) {
-                Toast.makeText(context, "Failed..", Toast.LENGTH_SHORT).show();
-                onFailure(call, t);
+            public void onFailure(@NonNull Call<T> call, @NonNull Throwable t) {
+                hideLoading();
+                Request.this.onRequestCompleted();
+                Request.this.onFailure(call, t);
             }
         });
     }
 
     private void showLoading() {
-        alertDialog.show();
+        loading.show();
     }
 
     private void hideLoading() {
-        alertDialog.dismiss();
+        loading.dismiss();
     }
+
+    public abstract void onRequestCompleted();
 
     public abstract void onResponse(Call<T> call, Response<T> response);
 
     public abstract void onFailure(Call<T> call, Throwable t);
-
-
 }

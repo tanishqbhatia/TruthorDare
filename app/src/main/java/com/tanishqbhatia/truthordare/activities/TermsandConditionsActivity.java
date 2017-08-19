@@ -1,6 +1,5 @@
 package com.tanishqbhatia.truthordare.activities;
 
-import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -18,8 +17,6 @@ import com.tanishqbhatia.truthordare.R;
 import com.tanishqbhatia.truthordare.utils.Methods;
 import com.tanishqbhatia.truthordare.utils.constants.ColorCons;
 import com.tanishqbhatia.truthordare.utils.toast.Toast;
-import com.transitionseverywhere.Recolor;
-import com.transitionseverywhere.TransitionManager;
 
 import butterknife.BindView;
 
@@ -40,10 +37,10 @@ public class TermsandConditionsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_terms_and_conditions);
         Methods.init(this);
+        showHelperToast();
         setupToolbar();
         displayTnC();
         addListeners();
-        showHelperToast();
     }
 
     private void showHelperToast() {
@@ -55,10 +52,10 @@ public class TermsandConditionsActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 areTnCAccepted = isChecked;
-                TransitionManager.beginDelayedTransition(acceptTnCCbLl, new Recolor());
-                acceptTnCCbLl.setBackground(new ColorDrawable(isChecked ? ColorCons.GREEN_500 : ColorCons.RED_500));
+                if(isChecked)
+                    Methods.changeBackgroundColor(acceptTnCCbLl, ColorCons.GREEN_500, 700);
+                else Methods.changeBackgroundColor(acceptTnCCbLl, ColorCons.RED_500, 700);
                 invalidateOptionsMenu();
-
             }
         });
     }
@@ -87,7 +84,7 @@ public class TermsandConditionsActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_continue:
-                Methods.launch(this, SignUpActivity.class);
+                Methods.launch(this, IdentificationActivity.class);
                 break;
         }
         return true;

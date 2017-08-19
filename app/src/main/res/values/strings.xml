@@ -5,7 +5,7 @@
     <string name="title_search">Search</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
-    <string name="title_profile">Profile</string>
+    <string name="title_user">User</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -145,4 +145,5 @@
     <string name="instagram_callback_url">https://goo.gl/ZSuR6U</string>
     <string name="notIdentified">Unable to identify, please login again.</string>
     <string name="okay">Okay</string>
+    <string name="title_activity_instagram_identification">Instagram authorization</string>
 </resources>

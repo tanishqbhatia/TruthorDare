@@ -1,9 +1,11 @@
 package com.tanishqbhatia.truthordare.interfaces;
 
-import com.tanishqbhatia.truthordare.models.Response;
+import com.tanishqbhatia.truthordare.models.ServerResponse;
+import com.tanishqbhatia.truthordare.utils.constants.PrefsCons;
 import com.tanishqbhatia.truthordare.utils.constants.WebsiteCons;
 
 import retrofit2.Call;
+import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
 
@@ -16,5 +18,5 @@ import retrofit2.http.POST;
 public interface Server {
     @FormUrlEncoded
     @POST(WebsiteCons.IDENTIFY)
-    Call<Response> isIdentified();
+    Call<ServerResponse> isIdentified(@Field(PrefsCons.ACCESS_TOKEN) String accessToken);
 }

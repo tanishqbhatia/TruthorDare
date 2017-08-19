@@ -61,7 +61,7 @@ public class IntroductionActivity extends AppIntro {
 
     @Override
     public void onDonePressed(Fragment currentFragment) {
-        super.onDonePressed(currentFragment);
         Methods.launch(IntroductionActivity.this, TermsandConditionsActivity.class);
+        super.onDonePressed(currentFragment);
     }
 }

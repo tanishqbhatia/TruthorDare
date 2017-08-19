@@ -4,11 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import com.instagram.instagramapi.activities.InstagramAuthActivity;
-import com.instagram.instagramapi.engine.InstagramEngine;
-import com.instagram.instagramapi.engine.InstagramKitConstants;
-import com.instagram.instagramapi.objects.IGSession;
-import com.instagram.instagramapi.utils.InstagramKitLoginScope;
+import com.tanishqbhatia.instagramauthorization.activities.InstagramAuthActivity;
+import com.tanishqbhatia.instagramauthorization.engine.InstagramEngine;
+import com.tanishqbhatia.instagramauthorization.engine.InstagramKitConstants;
+import com.tanishqbhatia.instagramauthorization.objects.IGSession;
+import com.tanishqbhatia.instagramauthorization.utils.InstagramKitLoginScope;
 import com.tanishqbhatia.truthordare.App;
 import com.tanishqbhatia.truthordare.utils.Methods;
 import com.tanishqbhatia.truthordare.utils.constants.RequestCons;
@@ -36,7 +36,7 @@ public abstract class Identify extends AppCompatActivity {
         startActivityForResult(intent, RequestCons.INSTAGRAM_LOGIN_REQUEST_CODE);
     }
 
-    public abstract void onIdentified();
+    public abstract void onIdentified(String accessToken);
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -50,7 +50,7 @@ public abstract class Identify extends AppCompatActivity {
                         if(session != null && session.getAccessToken() != null) {
                             PrefsMethods.setIdentified();
                             PrefsMethods.saveAccessToken(session.getAccessToken());
-                            onIdentified();
+                            onIdentified(session.getAccessToken());
                             return;
                         }
                     }
