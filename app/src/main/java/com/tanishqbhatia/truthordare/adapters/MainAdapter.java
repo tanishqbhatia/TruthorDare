@@ -4,7 +4,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.tanishqbhatia.truthordare.App;
 import com.tanishqbhatia.truthordare.fragments.HomeFragment;
+import com.tanishqbhatia.truthordare.fragments.UserFragment;
 import com.tanishqbhatia.truthordare.utils.constants.Cons;
 
 /**
@@ -22,15 +24,25 @@ public class MainAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case Cons.NAVIGATION_HOME:
-                return new HomeFragment();
+                HomeFragment homeFragment = new HomeFragment();
+                App.get().setCurrentFragment(homeFragment);
+                return homeFragment;
             case Cons.NAVIGATION_SEARCH:
-                return new HomeFragment();
+                HomeFragment searchFragment = new HomeFragment();
+                App.get().setCurrentFragment(searchFragment);
+                return searchFragment;
             case Cons.NAVIGATION_DASHBOARD:
-                return new HomeFragment();
+                HomeFragment dashboardFragment = new HomeFragment();
+                App.get().setCurrentFragment(dashboardFragment);
+                return dashboardFragment;
             case Cons.NAVIGATION_NOTIFICATIONS:
-                return new HomeFragment();
-            case Cons.NAVIGATION_PROFILE:
-                return new HomeFragment();
+                HomeFragment notificationsFragment = new HomeFragment();
+                App.get().setCurrentFragment(notificationsFragment);
+                return notificationsFragment;
+            case Cons.NAVIGATION_USER:
+                UserFragment userFragment = new UserFragment();
+                App.get().setCurrentFragment(userFragment);
+                return userFragment;
         }
         return null;
     }

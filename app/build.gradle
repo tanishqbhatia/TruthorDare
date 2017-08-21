@@ -46,7 +46,8 @@ dependencies {
     releaseCompile libraries.leakcanaryNoOp
 
     compile project(path: ':instagramauthorization')
+    compile project(path: ':backstack')
+    compile project(path: ':customviews')
 
     testCompile libraries.junit
-    compile 'com.android.support:support-v4:26.+'
 }

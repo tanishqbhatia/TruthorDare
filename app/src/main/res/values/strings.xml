@@ -139,8 +139,8 @@
     <string name="title_activity_terms_and_conditions">Terms and Conditions</string>
     <string name="acceptTnC">I have read and accept the terms and conditions and the privacy policy written above.</string>
     <string name="title_activity_sign_up">Sign up</string>
-    <string name="instagram_client_id">ef58c02b9dec4202b9503782c41d66bb</string>
-    <string name="instagram_client_secret">be0bebd6b82d4631b78f256de66d4cd6</string>
+    <string name="instagram_client_id">621bdec70a184a88a6f840d12011f800</string>
+    <string name="instagram_client_secret">209d28bde33343ecae28d3d3d69a7bdc</string>
     <string name="instagram_callback_url_original">http://tanishqbhatia.000webhostapp.com/TruthorDare/identify.php</string>
     <string name="instagram_callback_url">https://goo.gl/ZSuR6U</string>
     <string name="notIdentified">Unable to identify, please login again.</string>

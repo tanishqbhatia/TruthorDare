@@ -5,8 +5,8 @@
       <module fileurl="file://$PROJECT_DIR$/TruthorDare.iml" filepath="$PROJECT_DIR$/TruthorDare.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/backstack/backstack.iml" filepath="$PROJECT_DIR$/backstack/backstack.iml" />
+      <module fileurl="file://$PROJECT_DIR$/customviews/customviews.iml" filepath="$PROJECT_DIR$/customviews/customviews.iml" />
       <module fileurl="file://$PROJECT_DIR$/instagramauthorization/instagramauthorization.iml" filepath="$PROJECT_DIR$/instagramauthorization/instagramauthorization.iml" />
-      <module fileurl="file://$PROJECT_DIR$/recyclerview/recyclerview.iml" filepath="$PROJECT_DIR$/recyclerview/recyclerview.iml" />
     </modules>
   </component>
 </project>

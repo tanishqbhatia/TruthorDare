@@ -3,10 +3,11 @@ package com.tanishqbhatia.truthordare;
 import android.app.Activity;
 import android.app.Application;
 import android.content.ContextWrapper;
+import android.support.v4.app.Fragment;
 
 import com.tanishqbhatia.truthordare.interfaces.Server;
-import com.tanishqbhatia.truthordare.utils.Methods;
 import com.tanishqbhatia.truthordare.utils.constants.WebsiteCons;
+import com.tanishqbhatia.truthordare.utils.methods.Methods;
 import com.tanishqbhatia.truthordare.utils.prefs.Prefs;
 
 import io.realm.Realm;
@@ -22,6 +23,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class App extends Application {
     private static App instance;
     private Activity currentActivity;
+    private Fragment currentFragment;
     private Retrofit retrofit;
     private Server server;
 
@@ -85,5 +87,13 @@ public class App extends Application {
 
     public void setCurrentActivity(Activity currentActivity) {
         this.currentActivity = currentActivity;
+    }
+
+    public Fragment getCurrentFragment() {
+        return currentFragment;
+    }
+
+    public void setCurrentFragment(Fragment currentFragment) {
+        this.currentFragment = currentFragment;
     }
 }

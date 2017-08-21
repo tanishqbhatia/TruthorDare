@@ -6,9 +6,9 @@ import android.support.v4.app.Fragment;
 import com.github.paolorotolo.appintro.AppIntro;
 import com.github.paolorotolo.appintro.AppIntroFragment;
 import com.github.paolorotolo.appintro.model.SliderPage;
-import com.tanishqbhatia.truthordare.utils.Methods;
 import com.tanishqbhatia.truthordare.utils.constants.AppCons;
 import com.tanishqbhatia.truthordare.utils.constants.ColorCons;
+import com.tanishqbhatia.truthordare.utils.methods.Methods;
 
 /**
  * Created by Tanishq Bhatia on 11-08-2017 at 16:13.
@@ -61,7 +61,7 @@ public class IntroductionActivity extends AppIntro {
 
     @Override
     public void onDonePressed(Fragment currentFragment) {
-        Methods.launch(IntroductionActivity.this, TermsandConditionsActivity.class);
+        Methods.launch(TermsandConditionsActivity.class);
         super.onDonePressed(currentFragment);
     }
 }

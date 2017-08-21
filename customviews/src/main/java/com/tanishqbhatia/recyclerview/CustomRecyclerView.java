@@ -121,27 +121,27 @@ public class CustomRecyclerView extends RecyclerView
   }
 
   private void initAttrs(Context context, AttributeSet attrs, int defStyle) {
-    TypedArray typedArray = context.getTheme().obtainStyledAttributes(attrs, R.styleable.RecyclerView, defStyle, 0);
-    layoutMode = typedArray.getInt(R.styleable.RecyclerView_srv_layoutMode, 0);
-    gridSpanCount = typedArray.getInt(R.styleable.RecyclerView_srv_gridSpanCount, 0);
-    gridSpanSequence = typedArray.getString(R.styleable.RecyclerView_srv_gridSpanSequence);
-    spacing = typedArray.getDimensionPixelSize(R.styleable.RecyclerView_srv_spacing, 0);
-    verticalSpacing = typedArray.getDimensionPixelSize(R.styleable.RecyclerView_srv_verticalSpacing, 0);
-    horizontalSpacing = typedArray.getDimensionPixelSize(R.styleable.RecyclerView_srv_horizontalSpacing, 0);
-    isSpacingIncludeEdge = typedArray.getBoolean(R.styleable.RecyclerView_srv_isSpacingIncludeEdge, false);
-    showDivider = typedArray.getBoolean(R.styleable.RecyclerView_srv_showDivider, false);
-    showLastDivider = typedArray.getBoolean(R.styleable.RecyclerView_srv_showLastDivider, false);
-    dividerColor = typedArray.getColor(R.styleable.RecyclerView_srv_dividerColor, 0);
-    dividerOrientation = typedArray.getInt(R.styleable.RecyclerView_srv_dividerOrientation, 2);
-    dividerPaddingLeft = typedArray.getDimensionPixelSize(R.styleable.RecyclerView_srv_dividerPaddingLeft, 0);
-    dividerPaddingRight = typedArray.getDimensionPixelSize(R.styleable.RecyclerView_srv_dividerPaddingRight, 0);
-    dividerPaddingTop = typedArray.getDimensionPixelSize(R.styleable.RecyclerView_srv_dividerPaddingTop, 0);
-    dividerPaddingBottom = typedArray.getDimensionPixelSize(R.styleable.RecyclerView_srv_dividerPaddingBottom, 0);
-    isSnappyEnabled = typedArray.getBoolean(R.styleable.RecyclerView_srv_snappy, false);
-    snapAlignment = typedArray.getInt(R.styleable.RecyclerView_srv_snap_alignment, 0);
-    showEmptyStateView = typedArray.getBoolean(R.styleable.RecyclerView_srv_showEmptyStateView, false);
-    emptyStateViewRes = typedArray.getResourceId(R.styleable.RecyclerView_srv_emptyStateView, 0);
-    loadMoreViewRes = typedArray.getResourceId(R.styleable.RecyclerView_srv_loadMoreView, 0);
+    TypedArray typedArray = context.getTheme().obtainStyledAttributes(attrs, R.styleable.CustomRecyclerView, defStyle, 0);
+    layoutMode = typedArray.getInt(R.styleable.CustomRecyclerView_crv_layoutMode, 0);
+    gridSpanCount = typedArray.getInt(R.styleable.CustomRecyclerView_crv_gridSpanCount, 0);
+    gridSpanSequence = typedArray.getString(R.styleable.CustomRecyclerView_crv_gridSpanSequence);
+    spacing = typedArray.getDimensionPixelSize(R.styleable.CustomRecyclerView_crv_spacing, 0);
+    verticalSpacing = typedArray.getDimensionPixelSize(R.styleable.CustomRecyclerView_crv_verticalSpacing, 0);
+    horizontalSpacing = typedArray.getDimensionPixelSize(R.styleable.CustomRecyclerView_crv_horizontalSpacing, 0);
+    isSpacingIncludeEdge = typedArray.getBoolean(R.styleable.CustomRecyclerView_crv_isSpacingIncludeEdge, false);
+    showDivider = typedArray.getBoolean(R.styleable.CustomRecyclerView_crv_showDivider, false);
+    showLastDivider = typedArray.getBoolean(R.styleable.CustomRecyclerView_crv_showLastDivider, false);
+    dividerColor = typedArray.getColor(R.styleable.CustomRecyclerView_crv_dividerColor, 0);
+    dividerOrientation = typedArray.getInt(R.styleable.CustomRecyclerView_crv_dividerOrientation, 2);
+    dividerPaddingLeft = typedArray.getDimensionPixelSize(R.styleable.CustomRecyclerView_crv_dividerPaddingLeft, 0);
+    dividerPaddingRight = typedArray.getDimensionPixelSize(R.styleable.CustomRecyclerView_crv_dividerPaddingRight, 0);
+    dividerPaddingTop = typedArray.getDimensionPixelSize(R.styleable.CustomRecyclerView_crv_dividerPaddingTop, 0);
+    dividerPaddingBottom = typedArray.getDimensionPixelSize(R.styleable.CustomRecyclerView_crv_dividerPaddingBottom, 0);
+    isSnappyEnabled = typedArray.getBoolean(R.styleable.CustomRecyclerView_crv_snappy, false);
+    snapAlignment = typedArray.getInt(R.styleable.CustomRecyclerView_crv_snap_alignment, 0);
+    showEmptyStateView = typedArray.getBoolean(R.styleable.CustomRecyclerView_crv_showEmptyStateView, false);
+    emptyStateViewRes = typedArray.getResourceId(R.styleable.CustomRecyclerView_crv_emptyStateView, 0);
+    loadMoreViewRes = typedArray.getResourceId(R.styleable.CustomRecyclerView_crv_loadMoreView, 0);
     typedArray.recycle();
   }
 

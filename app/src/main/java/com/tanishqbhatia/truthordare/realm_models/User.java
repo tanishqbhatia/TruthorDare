@@ -17,7 +17,9 @@ public class User extends RealmObject {
     private String profilePictureURL;
     private String bio;
     private String website;
-    private UserCounts userCounts;
+    private Integer media;
+    private Integer following;
+    private Integer followers;
     private String accessToken;
 
     public String getId() {
@@ -68,37 +70,28 @@ public class User extends RealmObject {
         this.website = website;
     }
 
-    public UserCounts getUserCounts() {
-        return userCounts;
-    }
-
-    public void setUserCounts(UserCounts userCounts) {
-        this.userCounts = userCounts;
-    }
-
     public Integer getMedia() {
-        return userCounts.getMedia();
+        return media;
     }
 
     public void setMedia(Integer media) {
-        userCounts.setMedia(media);
+        this.media = media;
     }
 
-
     public Integer getFollowing() {
-        return userCounts.getFollowing();
+        return following;
     }
 
     public void setFollowing(Integer following) {
-        userCounts.setFollowing(following);
+        this.following = following;
     }
 
     public Integer getFollowers() {
-        return userCounts.getFollowers();
+        return followers;
     }
 
     public void setFollowers(Integer followers) {
-        userCounts.setFollowers(followers);
+        this.followers = followers;
     }
 
     public String getAccessToken() {

@@ -14,8 +14,9 @@ import com.tanishqbhatia.truthordare.R;
 import com.tanishqbhatia.truthordare.abstracts.Identify;
 import com.tanishqbhatia.truthordare.abstracts.Request;
 import com.tanishqbhatia.truthordare.models.ServerResponse;
-import com.tanishqbhatia.truthordare.utils.Methods;
 import com.tanishqbhatia.truthordare.utils.constants.ColorCons;
+import com.tanishqbhatia.truthordare.utils.methods.Methods;
+import com.tanishqbhatia.truthordare.utils.methods.RealmMethods;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -74,6 +75,7 @@ public class IdentificationActivity extends Identify {
             @Override
             public void onResponse(Call<ServerResponse> call, Response<ServerResponse> response) {
                 Methods.showLog("IdentificationActivity", "onResponse()", response.body().getResponse().toString());
+                Methods.launchOnly(MainActivity.class);
             }
 
             @Override
@@ -87,15 +89,26 @@ public class IdentificationActivity extends Identify {
         @Override
         public void onResponse(IGUser responseObject, IGPagInfo pageInfo) {
             Methods.showLog("IdentificationActivity", "onResponse()", responseObject.getAccessToken(),
-                    responseObject.getBio(),
-                    responseObject.getFullName(),
                     responseObject.getId(),
-                    responseObject.getProfilePictureURL(),
                     responseObject.getUsername(),
-                    responseObject.getWebsite(),
-                    String.valueOf(responseObject.getFollowedByCount()),
+                    responseObject.getFullName(),
+                    String.valueOf(responseObject.getMediaCount()),
                     String.valueOf(responseObject.getFollowsCount()),
-                    String.valueOf(responseObject.getMediaCount()));
+                    String.valueOf(responseObject.getFollowedByCount()),
+                    responseObject.getBio(),
+                    responseObject.getWebsite(),
+                    responseObject.getProfilePictureURL());
+            final String accessToken = responseObject.getAccessToken();
+            final String id = responseObject.getId();
+            final String username = responseObject.getUsername();
+            final String fullname = responseObject.getFullName();
+            final Integer media = responseObject.getMediaCount();
+            final Integer followers = responseObject.getFollowedByCount();
+            final Integer following = responseObject.getFollowsCount();
+            final String bio = responseObject.getBio();
+            final String website = responseObject.getWebsite();
+            final String profilePictureUrl = responseObject.getProfilePictureURL();
+            new RealmMethods().saveUser(accessToken, id, username, fullname, media, followers, following, bio, website, profilePictureUrl);
         }
 
         @Override

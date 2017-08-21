@@ -10,8 +10,8 @@ import com.tanishqbhatia.instagramauthorization.engine.InstagramKitConstants;
 import com.tanishqbhatia.instagramauthorization.objects.IGSession;
 import com.tanishqbhatia.instagramauthorization.utils.InstagramKitLoginScope;
 import com.tanishqbhatia.truthordare.App;
-import com.tanishqbhatia.truthordare.utils.Methods;
 import com.tanishqbhatia.truthordare.utils.constants.RequestCons;
+import com.tanishqbhatia.truthordare.utils.methods.Methods;
 import com.tanishqbhatia.truthordare.utils.prefs.PrefsMethods;
 
 /**

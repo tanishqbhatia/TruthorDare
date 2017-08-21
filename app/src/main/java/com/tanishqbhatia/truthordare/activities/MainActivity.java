@@ -12,8 +12,8 @@ import android.view.MenuItem;
 
 import com.tanishqbhatia.truthordare.R;
 import com.tanishqbhatia.truthordare.adapters.MainAdapter;
-import com.tanishqbhatia.truthordare.utils.Methods;
 import com.tanishqbhatia.truthordare.utils.constants.Cons;
+import com.tanishqbhatia.truthordare.utils.methods.Methods;
 import com.tanishqbhatia.truthordare.utils.prefs.PrefsMethods;
 
 import java.lang.reflect.Field;
@@ -25,9 +25,9 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.navigationBnv)
-    BottomNavigationView mNavigationBnv;
+    BottomNavigationView navigationBnv;
     @BindView(R.id.contentVp)
-    ViewPager mContentVp;
+    ViewPager contentVp;
     private MainAdapter mainAdapter;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -35,19 +35,19 @@ public class MainActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    mContentVp.setCurrentItem(Cons.NAVIGATION_HOME);
+                    contentVp.setCurrentItem(Cons.NAVIGATION_HOME);
                     return true;
                 case R.id.navigation_search:
-                    mContentVp.setCurrentItem(Cons.NAVIGATION_SEARCH);
+                    contentVp.setCurrentItem(Cons.NAVIGATION_SEARCH);
                     return true;
                 case R.id.navigation_dashboard:
-                    mContentVp.setCurrentItem(Cons.NAVIGATION_DASHBOARD);
+                    contentVp.setCurrentItem(Cons.NAVIGATION_DASHBOARD);
                     return true;
                 case R.id.navigation_notifications:
-                    mContentVp.setCurrentItem(Cons.NAVIGATION_NOTIFICATIONS);
+                    contentVp.setCurrentItem(Cons.NAVIGATION_NOTIFICATIONS);
                     return true;
                 case R.id.navigation_user:
-                    mContentVp.setCurrentItem(Cons.NAVIGATION_USER);
+                    contentVp.setCurrentItem(Cons.NAVIGATION_USER);
                     return true;
             }
             return false;
@@ -65,19 +65,19 @@ public class MainActivity extends AppCompatActivity {
         public void onPageSelected(int position) {
             switch (position) {
                 case Cons.NAVIGATION_HOME:
-                    mNavigationBnv.setSelectedItemId(R.id.navigation_home);
+                    navigationBnv.setSelectedItemId(R.id.navigation_home);
                     break;
                 case Cons.NAVIGATION_SEARCH:
-                    mNavigationBnv.setSelectedItemId(R.id.navigation_search);
+                    navigationBnv.setSelectedItemId(R.id.navigation_search);
                     break;
                 case Cons.NAVIGATION_DASHBOARD:
-                    mNavigationBnv.setSelectedItemId(R.id.navigation_dashboard);
+                    navigationBnv.setSelectedItemId(R.id.navigation_dashboard);
                     break;
                 case Cons.NAVIGATION_NOTIFICATIONS:
-                    mNavigationBnv.setSelectedItemId(R.id.navigation_notifications);
+                    navigationBnv.setSelectedItemId(R.id.navigation_notifications);
                     break;
                 case Cons.NAVIGATION_USER:
-                    mNavigationBnv.setSelectedItemId(R.id.navigation_user);
+                    navigationBnv.setSelectedItemId(R.id.navigation_user);
                     break;
             }
         }
@@ -93,9 +93,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Methods.init(this);
-        if(!PrefsMethods.isIdentified() || PrefsMethods.isIdentified()) {
-            Methods.cleanSlateProtocol();
-            finish();
+        if(!PrefsMethods.isIdentified()) {
+            Methods.launchOnly(IntroductionActivity.class);
         }
         setToolbar();
         setListeners();
@@ -108,13 +107,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void setAdapters() {
         mainAdapter = new MainAdapter(getSupportFragmentManager());
-        mContentVp.setAdapter(mainAdapter);
+        contentVp.setAdapter(mainAdapter);
     }
 
     private void setListeners() {
-        mNavigationBnv.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        disableShiftMode(mNavigationBnv);
-        mContentVp.addOnPageChangeListener(mOnPageChangeListener);
+        navigationBnv.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        disableShiftMode(navigationBnv);
+        contentVp.addOnPageChangeListener(mOnPageChangeListener);
     }
 
     private void disableShiftMode(BottomNavigationView view) {

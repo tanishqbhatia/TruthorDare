@@ -1,19 +1,24 @@
-package com.tanishqbhatia.truthordare.utils;
+package com.tanishqbhatia.truthordare.utils.methods;
 
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 
 import com.tanishqbhatia.truthordare.App;
+import com.tanishqbhatia.truthordare.R;
 import com.tanishqbhatia.truthordare.activities.IntroductionActivity;
 import com.tanishqbhatia.truthordare.utils.prefs.Prefs;
 
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * Created by Tanishq Bhatia on 10-08-2017 at 10:41.
@@ -36,6 +41,11 @@ public class Methods {
         App.get().setCurrentActivity(activity);
         ButterKnife.bind(activity);
         return activity;
+    }
+
+    public static Unbinder init(Fragment fragment, View view) {
+        App.get().setCurrentFragment(fragment);
+        return ButterKnife.bind(fragment, view);
     }
 
     public static void visible(View view) {
@@ -69,29 +79,27 @@ public class Methods {
     }
 
     public static void cleanSlateProtocol() {
-/*        AlertDialog.Builder builder = new AlertDialog.Builder(App.get());
+        AlertDialog.Builder builder = new AlertDialog.Builder(App.get().getCurrentActivity());
         builder.setCancelable(false).setMessage(R.string.notIdentified)
                 .setPositiveButton(R.string.okay, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         Prefs.clear();
-                        Intent intent = new Intent(App.get(), IntroductionActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        App.get().startActivity(intent);
+                        launchOnly(IntroductionActivity.class);
                     }
-                }).create().show();*/
+                }).create().show();
+    }
 
-        Prefs.clear();
-        Intent intent = new Intent(App.get(), IntroductionActivity.class);
+    public static void launch(Class targetClass) {
+        App.get().getCurrentActivity().startActivity(new Intent(App.get().getCurrentActivity(), targetClass));
+    }
+
+    public static void launchOnly(Class targetClass) {
+        Intent intent = new Intent(App.get().getCurrentActivity(), targetClass);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        App.get().startActivity(intent);
-    }
-
-    public static void launch(Activity sourceActivity, Class targetClass) {
-        sourceActivity.startActivity(new Intent(sourceActivity, targetClass));
+        App.get().getCurrentActivity().startActivity(intent);
+        App.get().getCurrentActivity().finish();
     }
 
     public static void changeBackgroundColor(final View view, int targetColor, int duration) {

@@ -14,8 +14,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.tanishqbhatia.truthordare.R;
-import com.tanishqbhatia.truthordare.utils.Methods;
 import com.tanishqbhatia.truthordare.utils.constants.ColorCons;
+import com.tanishqbhatia.truthordare.utils.methods.Methods;
 import com.tanishqbhatia.truthordare.utils.toast.Toast;
 
 import butterknife.BindView;
@@ -84,7 +84,7 @@ public class TermsandConditionsActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_continue:
-                Methods.launch(this, IdentificationActivity.class);
+                Methods.launch(IdentificationActivity.class);
                 break;
         }
         return true;
