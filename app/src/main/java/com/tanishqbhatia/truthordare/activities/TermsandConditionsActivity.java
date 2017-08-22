@@ -44,7 +44,7 @@ public class TermsandConditionsActivity extends AppCompatActivity {
     }
 
     private void showHelperToast() {
-        Toast.priority(Toast.NORMAL_PRIORITY).color(R.color.blue_500).duration(Toast.LENGTH_LONG).message("Please read these and accept the terms and conditions in order to continue.").show();
+        new Toast().priorityNormal().colorBlue().durationLong().message("Please read these and accept the terms and conditions in order to continue.").show();
     }
 
     private void addListeners() {

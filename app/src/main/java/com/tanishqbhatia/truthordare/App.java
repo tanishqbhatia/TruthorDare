@@ -5,6 +5,7 @@ import android.app.Application;
 import android.content.ContextWrapper;
 import android.support.v4.app.Fragment;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.tanishqbhatia.truthordare.interfaces.Server;
 import com.tanishqbhatia.truthordare.utils.constants.WebsiteCons;
 import com.tanishqbhatia.truthordare.utils.methods.Methods;
@@ -43,6 +44,11 @@ public class App extends Application {
         initRetrofit();
         initServer();
         initRealm();
+        initFresco();
+    }
+
+    private void initFresco() {
+        Fresco.initialize(instance);
     }
 
     private void initRealm() {

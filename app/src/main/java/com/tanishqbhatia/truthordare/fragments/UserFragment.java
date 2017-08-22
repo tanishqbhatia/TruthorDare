@@ -8,11 +8,12 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.tanishqbhatia.truthordare.R;
 import com.tanishqbhatia.truthordare.realm_models.User;
+import com.tanishqbhatia.truthordare.utils.imageview.CustomImageView;
 import com.tanishqbhatia.truthordare.utils.methods.Methods;
 import com.tanishqbhatia.truthordare.utils.methods.RealmMethods;
 
@@ -26,7 +27,9 @@ import butterknife.Unbinder;
 public class UserFragment extends Fragment {
 
     @BindView(R.id.profilePictureIv)
-    ImageView profilePictureIv;
+    SimpleDraweeView profilePictureIv;
+    @BindView(R.id.orig)
+    SimpleDraweeView orig;
     @BindView(R.id.fullNameTv)
     TextView fullNameTv;
     @BindView(R.id.postsCountTv)
@@ -70,9 +73,10 @@ public class UserFragment extends Fragment {
             followersCountTv.setText(String.valueOf(user.getFollowers()));
             followingCountTv.setText(String.valueOf(user.getFollowing()));
             bioTv.setText(user.getBio());
+            new CustomImageView(profilePictureIv).setBorder().setProgressBar().setScaleType().load(user.getProfilePictureURL());
+            new CustomImageView(orig).setProgressBar().setScaleType().load("https://www.imgonline.com.ua/result_img/imgonline-com-ua-progressiveLOJoiKYYX03m.jpg");
         } else {
             Methods.cleanSlateProtocol();
-            getActivity().finish();
         }
     }
 

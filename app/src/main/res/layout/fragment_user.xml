@@ -6,6 +6,7 @@
     tools:context="com.tanishqbhatia.truthordare.fragments.UserFragment">
 
     <android.support.v7.widget.CardView
+        android:id="@+id/userHeader"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
@@ -22,16 +23,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.3" />
+                app:layout_constraintGuide_percent="0.3"
+                tools:layout_editor_absoluteX="119dp"
+                tools:layout_editor_absoluteY="33dp" />
 
             <android.support.constraint.Guideline
                 android:id="@+id/horizontalProfilePictureGuideline"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintGuide_percent="0.5" />
+                app:layout_constraintGuide_percent="0.5"
+                tools:layout_editor_absoluteX="8dp"
+                tools:layout_editor_absoluteY="79dp" />
 
-            <ImageView
+            <com.facebook.drawee.view.SimpleDraweeView
                 android:id="@+id/profilePictureIv"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
@@ -132,10 +137,19 @@
                 android:text="Biography goes here"
                 android:textColor="@color/grey_500"
                 android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/horizontalProfilePictureGuideline" />
+                app:layout_constraintTop_toTopOf="@+id/horizontalProfilePictureGuideline" />
         </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.CardView>
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/orig"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/userHeader" />
 </android.support.constraint.ConstraintLayout>

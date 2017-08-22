@@ -23,12 +23,12 @@ import com.tanishqbhatia.truthordare.utils.prefs.PrefsMethods;
 public abstract class Identify extends AppCompatActivity {
 
     public void login() {
-        String[] scopes = {InstagramKitLoginScope.BASIC,
+        String[] scopes = {InstagramKitLoginScope.BASIC/*,
                 InstagramKitLoginScope.COMMENTS,
                 InstagramKitLoginScope.FOLLOWER_LIST,
                 InstagramKitLoginScope.LIKES,
                 InstagramKitLoginScope.PUBLIC_ACCESS,
-                InstagramKitLoginScope.RELATIONSHIP};
+                InstagramKitLoginScope.RELATIONSHIP*/};
         Intent intent = new Intent(App.get().getCurrentActivity(), InstagramAuthActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         intent.putExtra(InstagramEngine.TYPE, InstagramEngine.TYPE_LOGIN);

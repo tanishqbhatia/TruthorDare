@@ -35,8 +35,9 @@ dependencies {
     compile libraries.supportCardView
 
     compile libraries.retrofit
-    compile libraries.glide
-    annotationProcessor libraries.glideCompiler
+    //compile libraries.glide
+    //annotationProcessor libraries.glideCompiler
+    compile libraries.fresco
     compile libraries.butterknife
     annotationProcessor libraries.butterknifeCompiler
     compile libraries.eventbus

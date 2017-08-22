@@ -21,6 +21,10 @@ public class Loading {
     public Loading(Activity activity) {
         if (dialog == null)
             dialog = new Dialog(activity);
+        else {
+            dialog.dismiss();
+            dialog = null;
+        }
         if (!dialog.isShowing()) {
             dialog.setCancelable(false);
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);

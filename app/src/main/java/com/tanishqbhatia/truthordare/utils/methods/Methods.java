@@ -95,9 +95,8 @@ public class Methods {
 
     public static void launchOnly(Class targetClass) {
         Intent intent = new Intent(App.get().getCurrentActivity(), targetClass);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         App.get().getCurrentActivity().startActivity(intent);
         App.get().getCurrentActivity().finish();
     }
