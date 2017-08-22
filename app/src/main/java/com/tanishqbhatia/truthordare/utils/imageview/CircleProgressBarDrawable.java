@@ -6,6 +6,7 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 
 import com.facebook.drawee.drawable.ProgressBarDrawable;
+import com.tanishqbhatia.truthordare.utils.constants.ColorCons;
 import com.tanishqbhatia.truthordare.utils.methods.Methods;
 
 /**
@@ -34,8 +35,8 @@ public class CircleProgressBarDrawable extends ProgressBarDrawable {
         if (getHideWhenZero() && mLevel == 0) {
             return;
         }
-        drawBar(canvas, maxLevel, getBackgroundColor());
-        drawBar(canvas, mLevel, getColor());
+        drawBar(canvas, maxLevel, ColorCons.GREY_300);
+        drawBar(canvas, mLevel, ColorCons.GREY_500);
     }
 
     private void drawBar(Canvas canvas, int level, int color) {
