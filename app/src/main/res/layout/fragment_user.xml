@@ -9,7 +9,10 @@
         android:id="@+id/userHeader"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
+        android:layout_marginBottom="4dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -18,138 +21,208 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <android.support.constraint.Guideline
-                android:id="@+id/verticalProfilePictureGuideline"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.3"
-                tools:layout_editor_absoluteX="119dp"
-                tools:layout_editor_absoluteY="33dp" />
-
-            <android.support.constraint.Guideline
-                android:id="@+id/horizontalProfilePictureGuideline"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintGuide_percent="0.5"
-                tools:layout_editor_absoluteX="8dp"
-                tools:layout_editor_absoluteY="79dp" />
-
             <com.facebook.drawee.view.SimpleDraweeView
                 android:id="@+id/profilePictureIv"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_margin="8dp"
-                app:layout_constraintBottom_toTopOf="@+id/horizontalProfilePictureGuideline"
+                android:layout_marginBottom="4dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="4dp"
+                android:layout_marginTop="8dp"
+                android:src="@mipmap/ic_launcher"
+                app:layout_constraintBottom_toTopOf="@+id/bioTv"
+                app:layout_constraintHorizontal_weight="25"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toLeftOf="@+id/verticalProfilePictureGuideline"
+                app:layout_constraintRight_toLeftOf="@+id/postsTv"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/fullNameTv"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:layout_marginBottom="8dp"
+                android:layout_marginBottom="4dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="8dp"
                 android:layout_marginTop="8dp"
                 android:textColor="@color/black"
                 android:textSize="20sp"
-                app:layout_constraintBottom_toTopOf="@+id/followersCountTv"
-                app:layout_constraintLeft_toLeftOf="@+id/verticalProfilePictureGuideline"
-                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/postsCountTv"
+                app:layout_constraintLeft_toLeftOf="@+id/postsTv"
+                app:layout_constraintLeft_toRightOf="@+id/profilePictureIv"
+                app:layout_constraintRight_toRightOf="@+id/followingTv"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/postsTv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:text="Posts"
-                android:textColor="@color/grey_800"
-                android:textSize="14sp"
-                app:layout_constraintBottom_toTopOf="@+id/horizontalProfilePictureGuideline"
-                app:layout_constraintLeft_toLeftOf="@+id/verticalProfilePictureGuideline"
-                app:layout_constraintRight_toLeftOf="@+id/followersTv" />
-
-            <TextView
-                android:id="@+id/followersTv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:text="Followers"
-                android:textColor="@color/grey_800"
-                android:textSize="14sp"
-                app:layout_constraintBottom_toTopOf="@+id/horizontalProfilePictureGuideline"
-                app:layout_constraintLeft_toRightOf="@+id/postsTv"
-                app:layout_constraintRight_toLeftOf="@+id/followingTv" />
-
-            <TextView
-                android:id="@+id/followingTv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:text="Following"
-                android:textColor="@color/grey_800"
-                android:textSize="14sp"
-                app:layout_constraintBottom_toTopOf="@+id/horizontalProfilePictureGuideline"
-                app:layout_constraintLeft_toRightOf="@+id/followersTv"
-                app:layout_constraintRight_toRightOf="parent" />
-
-            <TextView
                 android:id="@+id/postsCountTv"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                android:layout_marginTop="4dp"
+                android:gravity="center_horizontal"
                 android:textColor="@color/grey_900"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toTopOf="@+id/postsTv"
+                app:layout_constraintHorizontal_weight="25"
                 app:layout_constraintLeft_toLeftOf="@+id/postsTv"
-                app:layout_constraintRight_toRightOf="@+id/postsTv" />
+                app:layout_constraintRight_toRightOf="@+id/postsTv"
+                app:layout_constraintTop_toBottomOf="@+id/fullNameTv" />
+
+            <TextView
+                android:id="@+id/postsTv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                android:gravity="center_horizontal"
+                android:text="posts"
+                android:textColor="@color/grey_800"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toTopOf="@+id/bioTv"
+                app:layout_constraintHorizontal_weight="25"
+                app:layout_constraintLeft_toRightOf="@+id/profilePictureIv"
+                app:layout_constraintRight_toLeftOf="@+id/followersTv"
+                app:layout_constraintTop_toBottomOf="@+id/fullNameTv" />
 
             <TextView
                 android:id="@+id/followersCountTv"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                android:layout_marginTop="4dp"
+                android:gravity="center_horizontal"
                 android:textColor="@color/grey_900"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toTopOf="@+id/followersTv"
+                app:layout_constraintHorizontal_weight="25"
                 app:layout_constraintLeft_toLeftOf="@+id/followersTv"
-                app:layout_constraintRight_toRightOf="@+id/followersTv" />
+                app:layout_constraintRight_toRightOf="@+id/followersTv"
+                app:layout_constraintTop_toBottomOf="@+id/fullNameTv" />
+
+            <TextView
+                android:id="@+id/followersTv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                android:gravity="center_horizontal"
+                android:text="followers"
+                android:textColor="@color/grey_800"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toTopOf="@+id/bioTv"
+                app:layout_constraintHorizontal_weight="25"
+                app:layout_constraintLeft_toRightOf="@+id/postsTv"
+                app:layout_constraintRight_toLeftOf="@+id/followingTv"
+                app:layout_constraintTop_toBottomOf="@+id/fullNameTv" />
 
             <TextView
                 android:id="@+id/followingCountTv"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="4dp"
+                android:gravity="center_horizontal"
                 android:textColor="@color/grey_900"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toTopOf="@+id/followingTv"
+                app:layout_constraintHorizontal_weight="25"
                 app:layout_constraintLeft_toLeftOf="@+id/followingTv"
-                app:layout_constraintRight_toRightOf="@+id/followingTv" />
+                app:layout_constraintRight_toRightOf="@+id/followingTv"
+                app:layout_constraintTop_toBottomOf="@+id/fullNameTv" />
+
+            <TextView
+                android:id="@+id/followingTv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="8dp"
+                android:gravity="center_horizontal"
+                android:text="following"
+                android:textColor="@color/grey_800"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toTopOf="@+id/bioTv"
+                app:layout_constraintHorizontal_weight="25"
+                app:layout_constraintLeft_toRightOf="@+id/followersTv"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/fullNameTv" />
 
             <TextView
                 android:id="@+id/bioTv"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:text="Biography goes here"
-                android:textColor="@color/grey_500"
+                android:layout_marginBottom="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="4dp"
+                android:textColor="@color/grey_800"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/horizontalProfilePictureGuideline" />
+                app:layout_constraintTop_toBottomOf="@+id/profilePictureIv" />
         </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.CardView>
 
-    <com.facebook.drawee.view.SimpleDraweeView
-        android:id="@+id/orig"
+    <android.support.v7.widget.CardView
+        android:id="@+id/instagramPostsCv"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="4dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/userHeader" />
+        app:layout_constraintTop_toBottomOf="@+id/userHeader">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/instagramPostsHeaderTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="8dp"
+                android:text="Instagram posts"
+                android:textColor="@color/grey_800"
+                android:textSize="14sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/instagramPostsViewTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="8dp"
+                android:text="View"
+                android:textColor="@color/blue_500"
+                android:textSize="14sp"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.tanishqbhatia.recyclerview.CustomRecyclerView
+                android:id="@+id/instagramPostsRv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                app:crv_layoutMode="linearHorizontal"
+                app:crv_snap_alignment="center"
+                app:crv_snappy="true"
+                app:crv_spacing="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/instagramPostsHeaderTv" />
+        </android.support.constraint.ConstraintLayout>
+    </android.support.v7.widget.CardView>
 </android.support.constraint.ConstraintLayout>

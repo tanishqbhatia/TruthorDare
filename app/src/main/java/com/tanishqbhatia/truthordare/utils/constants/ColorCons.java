@@ -13,7 +13,10 @@ import com.tanishqbhatia.truthordare.R;
 
 public class ColorCons {
     public static final int GREY_50 = ContextCompat.getColor(App.get(), R.color.grey_50);
+    public static final int GREY_100 = ContextCompat.getColor(App.get(), R.color.grey_100);
+    public static final int GREY_200 = ContextCompat.getColor(App.get(), R.color.grey_200);
     public static final int GREY_300 = ContextCompat.getColor(App.get(), R.color.grey_300);
+    public static final int GREY_400 = ContextCompat.getColor(App.get(), R.color.grey_400);
     public static final int GREY_500 = ContextCompat.getColor(App.get(), R.color.grey_500);
     public static final int GREY_700 = ContextCompat.getColor(App.get(), R.color.grey_700);
     public static final int GREY_800 = ContextCompat.getColor(App.get(), R.color.grey_800);

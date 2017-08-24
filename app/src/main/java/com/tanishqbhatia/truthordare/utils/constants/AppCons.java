@@ -22,4 +22,8 @@ public class AppCons {
     public static final String DARE_DESCRIPTION = App.get().getResources().getString(R.string.dare_description);
     public static final int DARE_LOGO = R.mipmap.ic_launcher;
 
+    public static final int PLACEHOLDER = R.drawable.placeholder;
+    public static final int CIRCULAR_PLACEHOLDER = R.drawable.circular_placeholder;
+    public static final int RETRY = R.drawable.ic_retry;
+
 }

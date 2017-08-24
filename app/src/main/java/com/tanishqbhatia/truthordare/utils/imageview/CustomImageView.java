@@ -9,11 +9,10 @@ import com.facebook.drawee.generic.GenericDraweeHierarchyBuilder;
 import com.facebook.drawee.generic.RoundingParams;
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.facebook.imagepipeline.image.QualityInfo;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
+import com.tanishqbhatia.truthordare.utils.constants.AppCons;
 import com.tanishqbhatia.truthordare.utils.constants.ColorCons;
-import com.tanishqbhatia.truthordare.utils.methods.Methods;
 
 /**
  * Created by Tanishq Bhatia on 22-08-2017 at 10:38.
@@ -26,14 +25,17 @@ public class CustomImageView {
 
     public CustomImageView(SimpleDraweeView imageView) {
         this.imageView = imageView;
+        this.imageView.getHierarchy().setPlaceholderImage(AppCons.PLACEHOLDER);
+        this.imageView.getHierarchy().setRetryImage(AppCons.RETRY, ScalingUtils.ScaleType.CENTER_INSIDE);
+        this.imageView.getHierarchy().setFailureImage(AppCons.RETRY, ScalingUtils.ScaleType.CENTER_INSIDE);
     }
 
     public CustomImageView setBorder() {
         GenericDraweeHierarchy hierarchy = imageView.getHierarchy();
+        hierarchy.setPlaceholderImage(AppCons.CIRCULAR_PLACEHOLDER);
         RoundingParams roundingParams = RoundingParams.asCircle();
         roundingParams.setBorder(ColorCons.BLACK, 2.0f);
         if (hierarchy == null) {
-            Methods.showLog("CustomImageView", "setBorder()", "here");
             imageView.setHierarchy(new GenericDraweeHierarchyBuilder(imageView.getResources()).setRoundingParams(roundingParams).build());
         } else {
             hierarchy.setRoundingParams(roundingParams);
@@ -44,7 +46,7 @@ public class CustomImageView {
 
     public CustomImageView setScaleType() {
         GenericDraweeHierarchy hierarchy = imageView.getHierarchy();
-        hierarchy.setActualImageScaleType(ScalingUtils.ScaleType.CENTER_CROP);
+        hierarchy.setActualImageScaleType(ScalingUtils.ScaleType.FIT_CENTER);
         imageView.setHierarchy(hierarchy);
         return this;
     }
@@ -54,21 +56,32 @@ public class CustomImageView {
         return this;
     }
 
-    public void load(String url) {
-        Uri uri = Uri.parse(url);
-        ImageRequest request = ImageRequestBuilder.newBuilderWithSource(uri)
+    public void load(String lowResUrl, String highResUrl) {
+        DraweeController controller;
+        Uri highResUri = Uri.parse(highResUrl);
+        ImageRequest highResRequest = ImageRequestBuilder.newBuilderWithSource(highResUri)
                 .setProgressiveRenderingEnabled(true)
                 .disableDiskCache()
                 .build();
-        DraweeController controller = Fresco.newDraweeControllerBuilder()
-                .setImageRequest(request)
-                .setTapToRetryEnabled(true)
-                .setRetainImageOnFailure(true)
-                .build();
+        if (lowResUrl != null) {
+            Uri lowResUri = Uri.parse(lowResUrl);
+            ImageRequest lowResRequest = ImageRequestBuilder.newBuilderWithSource(lowResUri)
+                    .disableDiskCache()
+                    .build();
+            controller = Fresco.newDraweeControllerBuilder()
+                    .setLowResImageRequest(lowResRequest)
+                    .setImageRequest(highResRequest)
+                    .setTapToRetryEnabled(true)
+                    .setRetainImageOnFailure(true)
+                    .build();
+        } else {
+            controller = Fresco.newDraweeControllerBuilder()
+                    .setImageRequest(highResRequest)
+                    .setTapToRetryEnabled(true)
+                    .setRetainImageOnFailure(true)
+                    .build();
+        }
         imageView.setController(controller);
-    }
-    private void logScan(QualityInfo qualityInfo, boolean isFinalImage) {
-        System.out.println(""+qualityInfo.getQuality());
     }
 
 }

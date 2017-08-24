@@ -7,7 +7,6 @@ import android.graphics.RectF;
 
 import com.facebook.drawee.drawable.ProgressBarDrawable;
 import com.tanishqbhatia.truthordare.utils.constants.ColorCons;
-import com.tanishqbhatia.truthordare.utils.methods.Methods;
 
 /**
  * Created by Tanishq Bhatia on 22-08-2017 at 11:05.
@@ -24,7 +23,6 @@ public class CircleProgressBarDrawable extends ProgressBarDrawable {
 
     @Override
     protected boolean onLevelChange(int level) {
-        Methods.showLog("CircleProgressBarDrawable", "onLevelChange()", "Level : " + level);
         mLevel = level;
         invalidateSelf();
         return true;
@@ -32,11 +30,11 @@ public class CircleProgressBarDrawable extends ProgressBarDrawable {
 
     @Override
     public void draw(Canvas canvas) {
-        if (getHideWhenZero() && mLevel == 0) {
+        if (getHideWhenZero() && mLevel == 0 || mLevel > 4500) {
             return;
         }
         drawBar(canvas, maxLevel, ColorCons.GREY_300);
-        drawBar(canvas, mLevel, ColorCons.GREY_500);
+        drawBar(canvas, mLevel, ColorCons.GREY_400);
     }
 
     private void drawBar(Canvas canvas, int level, int color) {
@@ -45,7 +43,7 @@ public class CircleProgressBarDrawable extends ProgressBarDrawable {
                 (float) (bounds.right * .6), (float) (bounds.bottom * .6));
         mPaint.setColor(color);
         mPaint.setStyle(Paint.Style.STROKE);
-        mPaint.setStrokeWidth(6);
+        mPaint.setStrokeWidth(5);
         if (level != 0)
             canvas.drawArc(rectF, 0, (float) (level * 360 / maxLevel), false, mPaint);
     }
