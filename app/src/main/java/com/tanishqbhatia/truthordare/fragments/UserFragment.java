@@ -13,10 +13,10 @@ import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.tanishqbhatia.recyclerview.CustomRecyclerView;
 import com.tanishqbhatia.truthordare.R;
-import com.tanishqbhatia.truthordare.realm_models.User;
+import com.tanishqbhatia.truthordare.models.User;
 import com.tanishqbhatia.truthordare.utils.imageview.CustomImageView;
 import com.tanishqbhatia.truthordare.utils.methods.Methods;
-import com.tanishqbhatia.truthordare.utils.methods.RealmMethods;
+import com.tanishqbhatia.truthordare.utils.prefs.PrefsMethods;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -71,14 +71,11 @@ public class UserFragment extends Fragment {
     }
 
     private void initHeader() {
-        User user = new RealmMethods().getUser();
+        User user = new PrefsMethods().getUser();
         if (user != null) {
             getActivity().setTitle(user.getUsername());
             fullNameTv.setText(user.getFullName());
-            postsCountTv.setText(String.valueOf(user.getMedia()));
-            followersCountTv.setText(String.valueOf(user.getFollowers()));
-            followingCountTv.setText(String.valueOf(user.getFollowing()));
-            bioTv.setText(user.getBio());
+            bioTv.setText(Methods.decode(user.getBio()));
             new CustomImageView(profilePictureIv).setBorder().setScaleType().load(null, user.getProfilePictureURL());
         } else {
             Methods.cleanSlateProtocol();

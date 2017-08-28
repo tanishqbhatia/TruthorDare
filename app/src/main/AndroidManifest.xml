@@ -42,10 +42,18 @@
         <meta-data
             android:name="com.tanishqbhatia.instagramauthorization.InstagramAppClientId"
             android:value="@string/instagram_client_id" />
-
         <meta-data
             android:name="com.tanishqbhatia.instagramauthorization.InstagramAppRedirectURL"
             android:value="@string/instagram_callback_url" />
+
+        <activity
+            android:name=".activities.instagram.AuthorizationActivity"
+            android:label="@string/title_activity_authorization"
+            android:parentActivityName=".activities.IdentificationActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.tanishqbhatia.truthordare.activities.IdentificationActivity" />
+        </activity>
     </application>
 
 </manifest>

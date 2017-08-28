@@ -10,27 +10,40 @@ import com.tanishqbhatia.truthordare.R;
  */
 
 public class InstagramCons {
-    private static final String INSTAGRAM_CLIENT_ID = App.get().getResources().getString(R.string.instagram_client_id);
-    private static final String INSTAGRAM_CLIENT_SECRET = App.get().getResources().getString(R.string.instagram_client_secret);
-    private static final String INSTAGRAM_CALLBACK_URL = App.get().getResources().getString(R.string.instagram_callback_url);
-    private static final String INSTAGRAM_CALLBACK_URL_ORIGINAL = App.get().getResources().getString(R.string.instagram_callback_url_original);
+    public static final String INSTAGRAM_CLIENT_ID = App.get().getResources().getString(R.string.instagram_client_id);
+    public static final String INSTAGRAM_CLIENT_SECRET = App.get().getResources().getString(R.string.instagram_client_secret);
+    public static final String INSTAGRAM_CALLBACK_URL = App.get().getResources().getString(R.string.instagram_callback_url);
+    public static final String INSTAGRAM_RESPONSE_TYPE = "code";
 
-    private static final String INSTAGRAM_LOGIN_URL_PREFIX = "https://api.instagram.com/oauth/authorize/?";
+    public static final String INSTAGRAM_LOGIN_URL_PREFIX = "https://api.instagram.com/oauth/authorize/?";
+    public static final String INSTAGRAM_LOGIN_URL_BASIC_SCOPE = InstagramCons.INSTAGRAM_LOGIN_URL_PREFIX
+            .concat(InstagramCons.URL_CLIENT_ID)
+            .concat(InstagramCons.INSTAGRAM_CLIENT_ID)
+            .concat(InstagramCons.AND)
+            .concat(InstagramCons.URL_REDIRECT_URI)
+            .concat(InstagramCons.INSTAGRAM_CALLBACK_URL)
+            .concat(InstagramCons.AND)
+            .concat(InstagramCons.URL_RESPONSE_TYPE)
+            .concat(InstagramCons.INSTAGRAM_RESPONSE_TYPE)
+            .concat(InstagramCons.AND)
+            .concat(InstagramCons.URL_SCOPE)
+            .concat(InstagramCons.SCOPE_BASIC);
 
-    private static final String AND = "&";
-    private static final String PLUS = "+";
+    public static final String AND = "&";
+    public static final String PLUS = "+";
+    public static final String EQUAL = "=";
 
-    private static final String URL_CLIENT_ID = "client_id=";
-    private static final String URL_REDIRECT_URI = "redirect_uri=";
-    private static final String URL_RESPONSE_TYPE = "response_type=";
-    private static final String URL_SCOPE = "scope=";
+    public static final String URL_CLIENT_ID = "client_id=";
+    public static final String URL_REDIRECT_URI = "redirect_uri=";
+    public static final String URL_RESPONSE_TYPE = "response_type=";
+    public static final String URL_SCOPE = "scope=";
 
-    private static final String SCOPE_BASIC = "basic";
-    private static final String SCOPE_PUBLIC_CONTENT = "public_content";
-    private static final String SCOPE_FOLLOWER_LIST = "follower_list";
-    private static final String SCOPE_COMMENTS = "comments";
-    private static final String SCOPE_RELATIONSHIPS = "relationships";
-    private static final String SCOPE_LIKES = "likes";
+    public static final String SCOPE_BASIC = "basic";
+    public static final String SCOPE_PUBLIC_CONTENT = "public_content";
+    public static final String SCOPE_FOLLOWER_LIST = "follower_list";
+    public static final String SCOPE_COMMENTS = "comments";
+    public static final String SCOPE_RELATIONSHIPS = "relationships";
+    public static final String SCOPE_LIKES = "likes";
 
     /*public static final String INSTAGRAM_LOGIN_URL = INSTAGRAM_LOGIN_URL_PREFIX
             .concat(URL_CLIENT_ID)

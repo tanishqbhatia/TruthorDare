@@ -14,9 +14,12 @@ import com.tanishqbhatia.truthordare.R;
 import com.tanishqbhatia.truthordare.abstracts.Identify;
 import com.tanishqbhatia.truthordare.abstracts.Request;
 import com.tanishqbhatia.truthordare.models.ServerResponse;
+import com.tanishqbhatia.truthordare.models.User;
 import com.tanishqbhatia.truthordare.utils.constants.ColorCons;
+import com.tanishqbhatia.truthordare.utils.dialogs.Loading;
 import com.tanishqbhatia.truthordare.utils.methods.Methods;
-import com.tanishqbhatia.truthordare.utils.methods.RealmMethods;
+import com.tanishqbhatia.truthordare.utils.prefs.PrefsMethods;
+import com.tanishqbhatia.truthordare.utils.toast.Toast;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -29,6 +32,7 @@ public class IdentificationActivity extends Identify {
     Toolbar toolbar;
     @BindView(R.id.continueBtn)
     Button continueBtn;
+    private Loading loading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,34 +64,32 @@ public class IdentificationActivity extends Identify {
     }
 
     @Override
-    public void onIdentified(String accessToken) {
-        saveIdentificationOnServer(accessToken);
+    public void onReceiveAccessToken(String accessToken) {
+        createLoading();
+        getOtherDetails(accessToken);
     }
 
-    private void saveIdentificationOnServer(String accessToken) {
+    private void createLoading() {
+        loading = new Loading(this);
+    }
+
+    private void showLoading() {
+        loading.show();
+    }
+
+    private void hideLoading() {
+        loading.dismiss();
+    }
+
+    private void getOtherDetails(String accessToken) {
+        showLoading();
         InstagramEngine.getInstance(this).getUserDetails(instagramAPIResponseCallback);
-        new Request<ServerResponse>(App.get().getServer().isIdentified(accessToken), this) {
-            @Override
-            public void onRequestCompleted() {
-                enable();
-            }
-
-            @Override
-            public void onResponse(Call<ServerResponse> call, Response<ServerResponse> response) {
-                Methods.showLog("IdentificationActivity", "onResponse()", response.body().getResponse().toString());
-                Methods.launchOnly(MainActivity.class);
-            }
-
-            @Override
-            public void onFailure(Call<ServerResponse> call, Throwable t) {
-                t.printStackTrace();
-            }
-        };
     }
 
     InstagramAPIResponseCallback<IGUser> instagramAPIResponseCallback = new InstagramAPIResponseCallback<IGUser>() {
         @Override
         public void onResponse(IGUser responseObject, IGPagInfo pageInfo) {
+            hideLoading();
             Methods.showLog("IdentificationActivity", "onResponse()", responseObject.getAccessToken(),
                     responseObject.getId(),
                     responseObject.getUsername(),
@@ -98,22 +100,54 @@ public class IdentificationActivity extends Identify {
                     responseObject.getBio(),
                     responseObject.getWebsite(),
                     responseObject.getProfilePictureURL());
-            final String accessToken = responseObject.getAccessToken();
-            final String id = responseObject.getId();
-            final String username = responseObject.getUsername();
-            final String fullname = responseObject.getFullName();
-            final Integer media = responseObject.getMediaCount();
-            final Integer followers = responseObject.getFollowedByCount();
-            final Integer following = responseObject.getFollowsCount();
-            final String bio = responseObject.getBio();
-            final String website = responseObject.getWebsite();
-            final String profilePictureUrl = responseObject.getProfilePictureURL();
-            new RealmMethods().saveUser(accessToken, id, username, fullname, media, followers, following, bio, website, profilePictureUrl);
+            String accessToken = responseObject.getAccessToken();
+            if(accessToken == null)
+                accessToken = new PrefsMethods().getAccessToken();
+            String id = responseObject.getId();
+            String username = responseObject.getUsername();
+            String fullName = responseObject.getFullName();
+            String bio = responseObject.getBio();
+            String profilePictureUrl = responseObject.getProfilePictureURL();
+            saveUserOnServer(accessToken, id, username, fullName, Methods.encode(bio), profilePictureUrl);
         }
 
         @Override
         public void onFailure(InstagramException exception) {
-
+            hideLoading();
+            new Toast().colorRed().priorityHigh().message("Unable to connect, please try again later.").show();
+            exception.printStackTrace();
         }
     };
+
+    private void saveUserOnServer(final String accessToken, final String id, final String username, final String fullName, final String bio, final String profilePictureUrl) {
+        new Request<ServerResponse>(App.get().getServer().saveUserOnServer(accessToken, id, username, fullName, bio, profilePictureUrl), this) {
+            @Override
+            public void onRequestCompleted() {
+                enable();
+            }
+
+            @Override
+            public void onResponse(Call<ServerResponse> call, Response<ServerResponse> response) {
+                Methods.showLog("IdentificationActivity", "onResponse()", response.body().getResponse().toString());
+                if (response.body().getResponse()) {
+                    User user = new User();
+                    user.setId(id);
+                    user.setAccessToken(accessToken);
+                    user.setUsername(username);
+                    user.setFullName(fullName);
+                    user.setBio(bio);
+                    user.setProfilePictureURL(profilePictureUrl);
+                    new PrefsMethods().saveUser(user);
+                    Methods.launchOnly(MainActivity.class);
+                } else
+                    new Toast().colorRed().priorityHigh().message("Unable to connect, please try again later.").show();
+            }
+
+            @Override
+            public void onFailure(Call<ServerResponse> call, Throwable t) {
+                new Toast().colorRed().priorityHigh().message("Unable to connect, please try again later.").show();
+                t.printStackTrace();
+            }
+        };
+    }
 }

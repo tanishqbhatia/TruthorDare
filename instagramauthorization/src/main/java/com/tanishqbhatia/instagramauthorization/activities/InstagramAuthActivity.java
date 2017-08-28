@@ -34,7 +34,6 @@ public class InstagramAuthActivity extends AppCompatActivity {
     String redirectURL;
     String[] scopes;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -17,6 +17,8 @@ import com.tanishqbhatia.truthordare.R;
 import com.tanishqbhatia.truthordare.activities.IntroductionActivity;
 import com.tanishqbhatia.truthordare.utils.prefs.Prefs;
 
+import java.io.UnsupportedEncodingException;
+
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
@@ -112,5 +114,25 @@ public class Methods {
 
         });
         colorAnimation.start();
+    }
+
+    public static String encode(String text) {
+        byte[] data = new byte[0];
+        try {
+            data = text.getBytes("UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return android.util.Base64.encodeToString(data, android.util.Base64.DEFAULT);
+    }
+
+    public static String decode(String text) {
+        byte[] data = android.util.Base64.decode(text, android.util.Base64.DEFAULT);
+        try {
+            text = new String(data, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return text;
     }
 }

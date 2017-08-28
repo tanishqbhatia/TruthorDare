@@ -18,5 +18,10 @@ import retrofit2.http.POST;
 public interface Server {
     @FormUrlEncoded
     @POST(WebsiteCons.IDENTIFY)
-    Call<ServerResponse> isIdentified(@Field(PrefsCons.ACCESS_TOKEN) String accessToken);
+    Call<ServerResponse> saveUserOnServer(@Field(PrefsCons.ACCESS_TOKEN) String accessToken,
+                                          @Field(PrefsCons.ID) String id,
+                                          @Field(PrefsCons.USERNAME) String username,
+                                          @Field(PrefsCons.FULL_NAME) String fullName,
+                                          @Field(PrefsCons.BIO) String bio,
+                                          @Field(PrefsCons.PROFILE_PICTURE_URL) String profilePictureUrl);
 }

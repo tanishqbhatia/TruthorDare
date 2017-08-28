@@ -4,12 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import com.tanishqbhatia.instagramauthorization.activities.InstagramAuthActivity;
 import com.tanishqbhatia.instagramauthorization.engine.InstagramEngine;
 import com.tanishqbhatia.instagramauthorization.engine.InstagramKitConstants;
 import com.tanishqbhatia.instagramauthorization.objects.IGSession;
 import com.tanishqbhatia.instagramauthorization.utils.InstagramKitLoginScope;
 import com.tanishqbhatia.truthordare.App;
+import com.tanishqbhatia.truthordare.activities.instagram.AuthorizationActivity;
 import com.tanishqbhatia.truthordare.utils.constants.RequestCons;
 import com.tanishqbhatia.truthordare.utils.methods.Methods;
 import com.tanishqbhatia.truthordare.utils.prefs.PrefsMethods;
@@ -29,14 +29,14 @@ public abstract class Identify extends AppCompatActivity {
                 InstagramKitLoginScope.LIKES,
                 InstagramKitLoginScope.PUBLIC_ACCESS,
                 InstagramKitLoginScope.RELATIONSHIP*/};
-        Intent intent = new Intent(App.get().getCurrentActivity(), InstagramAuthActivity.class);
+        Intent intent = new Intent(App.get().getCurrentActivity(), AuthorizationActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         intent.putExtra(InstagramEngine.TYPE, InstagramEngine.TYPE_LOGIN);
         intent.putExtra(InstagramEngine.SCOPE, scopes);
         startActivityForResult(intent, RequestCons.INSTAGRAM_LOGIN_REQUEST_CODE);
     }
 
-    public abstract void onIdentified(String accessToken);
+    public abstract void onReceiveAccessToken(String accessToken);
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -48,9 +48,9 @@ public abstract class Identify extends AppCompatActivity {
                     if (bundle.containsKey(InstagramKitConstants.kSessionKey)) {
                         IGSession session = (IGSession) bundle.getSerializable(InstagramKitConstants.kSessionKey);
                         if(session != null && session.getAccessToken() != null) {
-                            PrefsMethods.setIdentified();
-                            PrefsMethods.saveAccessToken(session.getAccessToken());
-                            onIdentified(session.getAccessToken());
+                            new PrefsMethods().setIdentified();
+                            new PrefsMethods().saveAccessToken(session.getAccessToken());
+                            onReceiveAccessToken(session.getAccessToken());
                             return;
                         }
                     }

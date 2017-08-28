@@ -11,7 +11,6 @@ import com.tanishqbhatia.truthordare.utils.constants.WebsiteCons;
 import com.tanishqbhatia.truthordare.utils.methods.Methods;
 import com.tanishqbhatia.truthordare.utils.prefs.Prefs;
 
-import io.realm.Realm;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -43,16 +42,11 @@ public class App extends Application {
         initPrefs();
         initRetrofit();
         initServer();
-        initRealm();
         initFresco();
     }
 
     private void initFresco() {
         Fresco.initialize(instance);
-    }
-
-    private void initRealm() {
-        Realm.init(instance);
     }
 
     private void initRetrofit() {

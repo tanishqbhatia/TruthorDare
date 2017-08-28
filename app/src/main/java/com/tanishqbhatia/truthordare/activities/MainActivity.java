@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Methods.init(this);
-        if(!PrefsMethods.isIdentified()) {
+        if(! new PrefsMethods().isIdentified()) {
             Methods.launchOnly(IntroductionActivity.class);
         }
         setToolbar();

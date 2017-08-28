@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'realm-android'
 android {
     compileSdkVersion versions.compileSdk
     buildToolsVersion versions.buildTools
@@ -35,6 +34,7 @@ dependencies {
     compile libraries.supportCardView
 
     compile libraries.retrofit
+    compile libraries.gson
     //compile libraries.glide
     //annotationProcessor libraries.glideCompiler
     compile libraries.fresco
@@ -51,4 +51,5 @@ dependencies {
     compile project(path: ':customviews')
 
     testCompile libraries.junit
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
 }

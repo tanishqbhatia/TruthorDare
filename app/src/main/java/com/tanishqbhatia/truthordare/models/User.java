@@ -1,7 +1,4 @@
-package com.tanishqbhatia.truthordare.realm_models;
-
-import io.realm.RealmObject;
-import io.realm.annotations.PrimaryKey;
+package com.tanishqbhatia.truthordare.models;
 
 /**
  * Created by Tanishq Bhatia on 19-08-2017 at 10:17.
@@ -9,18 +6,13 @@ import io.realm.annotations.PrimaryKey;
  * Contact number : +919780702709
  */
 
-public class User extends RealmObject {
-    @PrimaryKey
+public class User {
     private String id;
+    private String accessToken;
     private String username;
     private String fullName;
     private String profilePictureURL;
     private String bio;
-    private String website;
-    private Integer media;
-    private Integer following;
-    private Integer followers;
-    private String accessToken;
 
     public String getId() {
         return id;
@@ -60,38 +52,6 @@ public class User extends RealmObject {
 
     public void setBio(String bio) {
         this.bio = bio;
-    }
-
-    public String getWebsite() {
-        return website;
-    }
-
-    public void setWebsite(String website) {
-        this.website = website;
-    }
-
-    public Integer getMedia() {
-        return media;
-    }
-
-    public void setMedia(Integer media) {
-        this.media = media;
-    }
-
-    public Integer getFollowing() {
-        return following;
-    }
-
-    public void setFollowing(Integer following) {
-        this.following = following;
-    }
-
-    public Integer getFollowers() {
-        return followers;
-    }
-
-    public void setFollowers(Integer followers) {
-        this.followers = followers;
     }
 
     public String getAccessToken() {
