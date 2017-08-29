@@ -1,5 +1,7 @@
 package com.tanishqbhatia.truthordare.models;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by Tanishq Bhatia on 16-08-2017 at 14:08.
  * Email address : crash0er@gmail.com
@@ -8,6 +10,8 @@ package com.tanishqbhatia.truthordare.models;
 
 public class ServerResponse {
     private Boolean response;
+    @SerializedName("access_token")
+    private String accessToken;
 
     public Boolean getResponse() {
         return response;
@@ -15,5 +19,13 @@ public class ServerResponse {
 
     public void setResponse(Boolean response) {
         this.response = response;
+    }
+
+    public String getAccessToken() {
+        return accessToken;
+    }
+
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
     }
 }

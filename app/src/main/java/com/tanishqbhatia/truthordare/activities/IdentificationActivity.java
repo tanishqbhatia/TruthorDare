@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.widget.Button;
 
-import com.tanishqbhatia.instagramauthorization.engine.InstagramEngine;
 import com.tanishqbhatia.instagramauthorization.exceptions.InstagramException;
 import com.tanishqbhatia.instagramauthorization.interfaces.InstagramAPIResponseCallback;
 import com.tanishqbhatia.instagramauthorization.objects.IGPagInfo;
@@ -83,7 +82,7 @@ public class IdentificationActivity extends Identify {
 
     private void getOtherDetails(String accessToken) {
         showLoading();
-        InstagramEngine.getInstance(this).getUserDetails(instagramAPIResponseCallback);
+        //InstagramEngine.getInstance(this).getUserDetails(instagramAPIResponseCallback);
     }
 
     InstagramAPIResponseCallback<IGUser> instagramAPIResponseCallback = new InstagramAPIResponseCallback<IGUser>() {
