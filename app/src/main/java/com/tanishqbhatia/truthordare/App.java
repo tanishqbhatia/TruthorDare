@@ -6,6 +6,8 @@ import android.content.ContextWrapper;
 import android.support.v4.app.Fragment;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.tanishqbhatia.truthordare.interfaces.Server;
 import com.tanishqbhatia.truthordare.utils.constants.WebsiteCons;
 import com.tanishqbhatia.truthordare.utils.methods.Methods;
@@ -51,9 +53,12 @@ public class App extends Application {
 
     private void initRetrofit() {
         if (retrofit == null) {
+            Gson gson = new GsonBuilder()
+                    .setLenient()
+                    .create();
             retrofit = new Retrofit.Builder()
                     .baseUrl(WebsiteCons.WEBSITE_URL_ORIGINAL)
-                    .addConverterFactory(GsonConverterFactory.create())
+                    .addConverterFactory(GsonConverterFactory.create(gson))
                     .build();
         }
     }

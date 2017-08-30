@@ -1,9 +1,11 @@
 package com.tanishqbhatia.truthordare.activities;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.widget.Button;
 
+import com.tanishqbhatia.instagramauthorization.engine.InstagramEngine;
 import com.tanishqbhatia.instagramauthorization.exceptions.InstagramException;
 import com.tanishqbhatia.instagramauthorization.interfaces.InstagramAPIResponseCallback;
 import com.tanishqbhatia.instagramauthorization.objects.IGPagInfo;
@@ -15,7 +17,6 @@ import com.tanishqbhatia.truthordare.abstracts.Request;
 import com.tanishqbhatia.truthordare.models.ServerResponse;
 import com.tanishqbhatia.truthordare.models.User;
 import com.tanishqbhatia.truthordare.utils.constants.ColorCons;
-import com.tanishqbhatia.truthordare.utils.dialogs.Loading;
 import com.tanishqbhatia.truthordare.utils.methods.Methods;
 import com.tanishqbhatia.truthordare.utils.prefs.PrefsMethods;
 import com.tanishqbhatia.truthordare.utils.toast.Toast;
@@ -31,13 +32,14 @@ public class IdentificationActivity extends Identify {
     Toolbar toolbar;
     @BindView(R.id.continueBtn)
     Button continueBtn;
-    private Loading loading;
+    private Activity activity;
+    private int i=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
-        Methods.init(this);
+        activity = Methods.init(this);
         setupToolbar();
     }
 
@@ -64,62 +66,48 @@ public class IdentificationActivity extends Identify {
 
     @Override
     public void onReceiveAccessToken(String accessToken) {
-        createLoading();
         getOtherDetails(accessToken);
     }
 
-    private void createLoading() {
-        loading = new Loading(this);
-    }
-
-    private void showLoading() {
-        loading.show();
-    }
-
-    private void hideLoading() {
-        loading.dismiss();
-    }
 
     private void getOtherDetails(String accessToken) {
-        showLoading();
-        //InstagramEngine.getInstance(this).getUserDetails(instagramAPIResponseCallback);
+        InstagramEngine.getInstance(this).getUserDetails(activity, instagramAPIResponseCallback);
     }
 
     InstagramAPIResponseCallback<IGUser> instagramAPIResponseCallback = new InstagramAPIResponseCallback<IGUser>() {
         @Override
         public void onResponse(IGUser responseObject, IGPagInfo pageInfo) {
-            hideLoading();
-            Methods.showLog("IdentificationActivity", "onResponse()", responseObject.getAccessToken(),
-                    responseObject.getId(),
-                    responseObject.getUsername(),
-                    responseObject.getFullName(),
-                    String.valueOf(responseObject.getMediaCount()),
-                    String.valueOf(responseObject.getFollowsCount()),
-                    String.valueOf(responseObject.getFollowedByCount()),
-                    responseObject.getBio(),
-                    responseObject.getWebsite(),
-                    responseObject.getProfilePictureURL());
             String accessToken = responseObject.getAccessToken();
-            if(accessToken == null)
+            if (accessToken == null)
                 accessToken = new PrefsMethods().getAccessToken();
             String id = responseObject.getId();
             String username = responseObject.getUsername();
             String fullName = responseObject.getFullName();
             String bio = responseObject.getBio();
             String profilePictureUrl = responseObject.getProfilePictureURL();
-            saveUserOnServer(accessToken, id, username, fullName, Methods.encode(bio), profilePictureUrl);
+            Methods.showLog("IdentificationActivity", "onResponse()", accessToken,
+                    id,
+                    username,
+                    fullName,
+                    String.valueOf(responseObject.getMediaCount()),
+                    String.valueOf(responseObject.getFollowsCount()),
+                    String.valueOf(responseObject.getFollowedByCount()),
+                    bio,
+                    responseObject.getWebsite(),
+                    profilePictureUrl);
+            saveUserOnServer(accessToken, id, username, Methods.encode(fullName), Methods.encode(bio), profilePictureUrl);
         }
 
         @Override
         public void onFailure(InstagramException exception) {
-            hideLoading();
             new Toast().colorRed().priorityHigh().message("Unable to connect, please try again later.").show();
             exception.printStackTrace();
         }
     };
 
     private void saveUserOnServer(final String accessToken, final String id, final String username, final String fullName, final String bio, final String profilePictureUrl) {
-        new Request<ServerResponse>(App.get().getServer().saveUserOnServer(accessToken, id, username, fullName, bio, profilePictureUrl), this) {
+        ++i;
+        new Request<ServerResponse>(App.get().getServer().saveUserOnServer(id, username, fullName, bio, profilePictureUrl), this) {
             @Override
             public void onRequestCompleted() {
                 enable();
@@ -127,25 +115,32 @@ public class IdentificationActivity extends Identify {
 
             @Override
             public void onResponse(Call<ServerResponse> call, Response<ServerResponse> response) {
-                Methods.showLog("IdentificationActivity", "onResponse()", response.body().getResponse().toString());
-                if (response.body().getResponse()) {
-                    User user = new User();
-                    user.setId(id);
-                    user.setAccessToken(accessToken);
-                    user.setUsername(username);
-                    user.setFullName(fullName);
-                    user.setBio(bio);
-                    user.setProfilePictureURL(profilePictureUrl);
-                    new PrefsMethods().saveUser(user);
-                    Methods.launchOnly(MainActivity.class);
-                } else
-                    new Toast().colorRed().priorityHigh().message("Unable to connect, please try again later.").show();
+                if(response != null && response.body() != null) {
+                    Methods.showLog("IdentificationActivity", "onResponse()", String.valueOf(response.body().getResponse()));
+                    if (response.body().getResponse()) {
+                        User user = new User();
+                        user.setId(id);
+                        user.setAccessToken(accessToken);
+                        user.setUsername(username);
+                        user.setFullName(fullName);
+                        user.setBio(bio);
+                        user.setProfilePictureURL(profilePictureUrl);
+                        new PrefsMethods().saveUser(user);
+                        Methods.launchOnly(MainActivity.class);
+                    } else
+                        new Toast().colorRed().priorityHigh().message("Unable to connect, please try again later.").show();
+                } else {
+                    if(i < 3)
+                        saveUserOnServer(accessToken, id, username, fullName, bio, profilePictureUrl);
+                }
             }
 
             @Override
             public void onFailure(Call<ServerResponse> call, Throwable t) {
                 new Toast().colorRed().priorityHigh().message("Unable to connect, please try again later.").show();
                 t.printStackTrace();
+                if(i < 3)
+                    saveUserOnServer(accessToken, id, username, fullName, bio, profilePictureUrl);
             }
         };
     }

@@ -1,10 +1,8 @@
 package com.tanishqbhatia.instagramauthorization.widgets;
 
-import android.annotation.TargetApi;
 import android.graphics.Bitmap;
-import android.os.Build;
+import android.util.Log;
 import android.view.View;
-import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
@@ -12,6 +10,8 @@ import com.tanishqbhatia.instagramauthorization.interfaces.InstagramAuthCallback
 
 
 public class InstagramWebViewClient extends WebViewClient {
+
+    boolean flag;
 
     InstagramAuthCallbackListener instagramAuthCallbackListener;
 
@@ -22,29 +22,37 @@ public class InstagramWebViewClient extends WebViewClient {
         this.instagramAuthCallbackListener = instagramAuthCallbackListener;
     }
 
-    @TargetApi(Build.VERSION_CODES.N)
-    @Override
-    public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-        if (!instagramAuthCallbackListener.onRedirect(request.getUrl().toString())) {
-            view.loadUrl(request.getUrl().toString());
-        }
-        return true;
-    }
-
-    @SuppressWarnings("deprecation")
-    @Override
-    public boolean shouldOverrideUrlLoading(WebView view, String url) {
-        if (!instagramAuthCallbackListener.onRedirect(url)) {
-            view.loadUrl(url);
-        }
-        return true;
-    }
+//    @TargetApi(Build.VERSION_CODES.N)
+//    @Override
+//    public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+//        if (!instagramAuthCallbackListener.onRedirect(request.getUrl().toString())) {
+//            view.loadUrl(request.getUrl().toString());
+//        }
+//        return true;
+//    }
+//
+//    @SuppressWarnings("deprecation")
+//    @Override
+//    public boolean shouldOverrideUrlLoading(WebView view, String url) {
+//        if (!instagramAuthCallbackListener.onRedirect(url)) {
+//            view.loadUrl(url);
+//        }
+//        return true;
+//    }
 
     @Override
     public void onPageFinished(WebView view, String url) {
-        super.onPageFinished(view, url);
+        Log.i("url", "onPageFinished: " + url);
         view.setVisibility(View.VISIBLE);
         view.bringToFront();
+        flag = url.contains("code");
+        if (url.startsWith("http://tanishqbhatia.epizy.com/identify.php") && flag) {
+//            if (!instagramAuthCallbackListener.onRedirect(url)) {
+//            view.loadUrl(url);
+            view.loadUrl("javascript:window.HTMLOUT.processHTML('<head>'+document.getElementsByTagName('html')[0].innerHTML+'</head>');");
+//            }
+        }
+        super.onPageFinished(view, url);
     }
 
     @Override

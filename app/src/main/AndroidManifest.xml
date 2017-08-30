@@ -47,7 +47,7 @@
             android:value="@string/instagram_callback_url" />
 
         <activity
-            android:name=".activities.instagram.AuthorizationActivity"
+            android:name="com.tanishqbhatia.instagram.activities.AuthorizationActivity"
             android:label="@string/title_activity_authorization"
             android:parentActivityName=".activities.IdentificationActivity">
             <meta-data

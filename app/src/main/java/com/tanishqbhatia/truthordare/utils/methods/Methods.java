@@ -3,7 +3,6 @@ package com.tanishqbhatia.truthordare.utils.methods;
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
 import android.app.Activity;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
@@ -39,7 +38,7 @@ public class Methods {
         Log.i(TAG, message);
     }
 
-    public static Context init(Activity activity) {
+    public static Activity init(Activity activity) {
         App.get().setCurrentActivity(activity);
         ButterKnife.bind(activity);
         return activity;

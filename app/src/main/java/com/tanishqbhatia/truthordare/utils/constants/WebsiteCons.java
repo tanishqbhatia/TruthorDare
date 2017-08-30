@@ -1,5 +1,8 @@
 package com.tanishqbhatia.truthordare.utils.constants;
 
+import com.tanishqbhatia.truthordare.App;
+import com.tanishqbhatia.truthordare.R;
+
 /**
  * Created by Tanishq Bhatia on 16-08-2017 at 11:47.
  * Email address : crash0er@gmail.com
@@ -7,7 +10,6 @@ package com.tanishqbhatia.truthordare.utils.constants;
  */
 
 public class WebsiteCons {
-    public static final String WEBSITE_URL_ORIGINAL = "http://tanishqbhatia.000webhostapp.com/TruthorDare/";
-    public static final String WEBSITE_URL = "https://goo.gl/NUY7AB";
+    public static final String WEBSITE_URL_ORIGINAL = App.get().getResources().getString(R.string.website_url);
     public static final String IDENTIFY = "identify.php";
 }

@@ -4,10 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
+import com.tanishqbhatia.instagramauthorization.activities.InstagramAuthActivity;
+import com.tanishqbhatia.instagramauthorization.engine.InstagramEngine;
+import com.tanishqbhatia.instagramauthorization.engine.InstagramKitConstants;
+import com.tanishqbhatia.instagramauthorization.objects.IGSession;
 import com.tanishqbhatia.instagramauthorization.utils.InstagramKitLoginScope;
 import com.tanishqbhatia.truthordare.App;
-import com.tanishqbhatia.truthordare.activities.instagram.AuthorizationActivity;
-import com.tanishqbhatia.truthordare.utils.constants.PrefsCons;
 import com.tanishqbhatia.truthordare.utils.constants.RequestCons;
 import com.tanishqbhatia.truthordare.utils.methods.Methods;
 import com.tanishqbhatia.truthordare.utils.prefs.PrefsMethods;
@@ -27,7 +29,9 @@ public abstract class Identify extends AppCompatActivity {
                 InstagramKitLoginScope.LIKES,
                 InstagramKitLoginScope.PUBLIC_ACCESS,
                 InstagramKitLoginScope.RELATIONSHIP*/};
-        Intent intent = new Intent(App.get().getCurrentActivity(), AuthorizationActivity.class);
+        Intent intent = new Intent(App.get().getCurrentActivity(), InstagramAuthActivity.class);
+        intent.putExtra(InstagramEngine.TYPE, InstagramEngine.TYPE_LOGIN);
+        intent.putExtra(InstagramEngine.SCOPE, scopes);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivityForResult(intent, RequestCons.INSTAGRAM_LOGIN_REQUEST_CODE);
     }
@@ -40,7 +44,7 @@ public abstract class Identify extends AppCompatActivity {
         switch (requestCode) {
             case RequestCons.INSTAGRAM_LOGIN_REQUEST_CODE:
                 if (resultCode == RESULT_OK) {
-                    Bundle bundle = data.getExtras();
+                    /*Bundle bundle = data.getExtras();
                     if(bundle.containsKey(PrefsCons.ACCESS_TOKEN)) {
                         String accessToken = data.getStringExtra(PrefsCons.ACCESS_TOKEN);
                         if(accessToken != null) {
@@ -49,9 +53,9 @@ public abstract class Identify extends AppCompatActivity {
                             onReceiveAccessToken(accessToken);
                             return;
                         }
-                    }
+                    }*/
 
-                    /*Bundle bundle = data.getExtras();
+                    Bundle bundle = data.getExtras();
                     if (bundle.containsKey(InstagramKitConstants.kSessionKey)) {
                         IGSession session = (IGSession) bundle.getSerializable(InstagramKitConstants.kSessionKey);
                         if(session != null && session.getAccessToken() != null) {
@@ -60,7 +64,7 @@ public abstract class Identify extends AppCompatActivity {
                             onReceiveAccessToken(session.getAccessToken());
                             return;
                         }
-                    }*/
+                    }
                 }
                 Methods.cleanSlateProtocol();
                 break;
