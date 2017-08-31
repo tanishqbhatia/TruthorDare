@@ -33,7 +33,6 @@ public class IdentificationActivity extends Identify {
     @BindView(R.id.continueBtn)
     Button continueBtn;
     private Activity activity;
-    private int i=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +67,6 @@ public class IdentificationActivity extends Identify {
     public void onReceiveAccessToken(String accessToken) {
         getOtherDetails(accessToken);
     }
-
 
     private void getOtherDetails(String accessToken) {
         InstagramEngine.getInstance(this).getUserDetails(activity, instagramAPIResponseCallback);
@@ -106,7 +104,6 @@ public class IdentificationActivity extends Identify {
     };
 
     private void saveUserOnServer(final String accessToken, final String id, final String username, final String fullName, final String bio, final String profilePictureUrl) {
-        ++i;
         new Request<ServerResponse>(App.get().getServer().saveUserOnServer(id, username, fullName, bio, profilePictureUrl), this) {
             @Override
             public void onRequestCompleted() {
@@ -129,9 +126,6 @@ public class IdentificationActivity extends Identify {
                         Methods.launchOnly(MainActivity.class);
                     } else
                         new Toast().colorRed().priorityHigh().message("Unable to connect, please try again later.").show();
-                } else {
-                    if(i < 3)
-                        saveUserOnServer(accessToken, id, username, fullName, bio, profilePictureUrl);
                 }
             }
 
@@ -139,8 +133,6 @@ public class IdentificationActivity extends Identify {
             public void onFailure(Call<ServerResponse> call, Throwable t) {
                 new Toast().colorRed().priorityHigh().message("Unable to connect, please try again later.").show();
                 t.printStackTrace();
-                if(i < 3)
-                    saveUserOnServer(accessToken, id, username, fullName, bio, profilePictureUrl);
             }
         };
     }

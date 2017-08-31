@@ -19,4 +19,12 @@
     <style name="AppTheme.WhiteAccent">
         <item name="colorAccent">@color/white</item>
     </style>
+
+    <style name="AppTheme.AlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="buttonBarButtonStyle">@style/AppTheme.AlertDialog.Button</item>
+    </style>
+
+    <style name="AppTheme.AlertDialog.Button" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        <item name="android:textAllCaps">false</item>
+    </style>
 </resources>

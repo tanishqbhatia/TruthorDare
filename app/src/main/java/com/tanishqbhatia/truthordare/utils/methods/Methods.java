@@ -80,7 +80,7 @@ public class Methods {
     }
 
     public static void cleanSlateProtocol() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(App.get().getCurrentActivity());
+        AlertDialog.Builder builder = new AlertDialog.Builder(App.get().getCurrentActivity(), R.style.AppTheme_AlertDialog);
         builder.setCancelable(false).setMessage(R.string.notIdentified)
                 .setPositiveButton(R.string.okay, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
@@ -96,7 +96,7 @@ public class Methods {
 
     public static void launchOnly(Class targetClass) {
         Intent intent = new Intent(App.get().getCurrentActivity(), targetClass);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         App.get().getCurrentActivity().startActivity(intent);
         App.get().getCurrentActivity().finish();
     }

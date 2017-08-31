@@ -2,7 +2,6 @@ package com.tanishqbhatia.instagramauthorization.activities;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -21,7 +20,6 @@ import com.tanishqbhatia.instagramauthorization.R;
 import com.tanishqbhatia.instagramauthorization.engine.InstagramEngine;
 import com.tanishqbhatia.instagramauthorization.engine.InstagramKitConstants;
 import com.tanishqbhatia.instagramauthorization.exceptions.InstagramException;
-import com.tanishqbhatia.instagramauthorization.interfaces.InstagramAuthCallbackListener;
 import com.tanishqbhatia.instagramauthorization.interfaces.InstagramLoginCallbackListener;
 import com.tanishqbhatia.instagramauthorization.objects.IGSession;
 import com.tanishqbhatia.instagramauthorization.widgets.InstagramWebViewClient;
@@ -52,7 +50,7 @@ public class InstagramAuthActivity extends AppCompatActivity {
         instagrramAuthWebView.getSettings().setJavaScriptEnabled(true);
         instagrramAuthWebView.addJavascriptInterface(new MyJavaScriptInterface(), "HTMLOUT");
 
-        webViewClient = new InstagramWebViewClient(instagramAuthCallbackListener);
+        webViewClient = new InstagramWebViewClient();
 
         handleIntent(getIntent());
     }
@@ -136,33 +134,31 @@ public class InstagramAuthActivity extends AppCompatActivity {
                 } else {
                     response = String.valueOf(Html.fromHtml(html));
                 }
-                Log.i("HTML_RESPONSE", "processHTML: " + response);
-                Gson gson = new Gson();
-                ServerResponse serverResponse = gson.fromJson(response, ServerResponse.class);
-                if (serverResponse.getResponse()) {
-//                    Intent intent = new Intent();
-//                    intent.putExtra("access_token", serverResponse.getAccessToken());
-//                    setResult(RESULT_OK, intent);
-//                    finish();
-                    response = serverResponse.getAccessToken();
-                    if (response != null && response.length()>0) {
-                        IGSession IGSession = new IGSession(response);
-                        InstagramEngine.getInstance(InstagramAuthActivity.this).setSession(IGSession);
-                        InstagramEngine.getInstance(InstagramAuthActivity.this).getInstagramLoginButtonCallback().onSuccess(IGSession);
+                if (response != null) {
+                    Gson gson = new Gson();
+                    ServerResponse serverResponse = gson.fromJson(response, ServerResponse.class);
+                    if (serverResponse != null && serverResponse.getResponse()) {
+                        response = serverResponse.getAccessToken();
+                        if (response != null && response.length() > 0) {
+                            IGSession IGSession = new IGSession(response);
+                            InstagramEngine.getInstance(InstagramAuthActivity.this).setSession(IGSession);
+                            InstagramEngine.getInstance(InstagramAuthActivity.this).getInstagramLoginButtonCallback().onSuccess(IGSession);
+                        } else {
+                            InstagramException instagramException = new InstagramException("Error: Something went wrong, please try again.");
+                            InstagramEngine.getInstance(InstagramAuthActivity.this).getInstagramLoginButtonCallback().onError(instagramException);
+                        }
                     } else {
-                        InstagramException instagramException = new InstagramException("Error: Something went wrong, please try again.");
-                        InstagramEngine.getInstance(InstagramAuthActivity.this).getInstagramLoginButtonCallback().onError(instagramException);
+                        Toast.makeText(InstagramAuthActivity.this, "Error while connecting to instagram, please try again.", Toast.LENGTH_SHORT).show();
+                        initAuth();
                     }
-                    finish();
-//                    return serverResponse.getAccessToken();
                 } else {
-                    Toast.makeText(InstagramAuthActivity.this, "Error while connecting to instagram, please try again.", Toast.LENGTH_SHORT).show();
-                    initAuth();
+                    InstagramException instagramException = new InstagramException("Error: Something went wrong, please try again.");
+                    InstagramEngine.getInstance(InstagramAuthActivity.this).getInstagramLoginButtonCallback().onError(instagramException);
                 }
+                finish();
             } catch (Exception e) {
                 e.printStackTrace();
             }
-//            return null;
         }
     }
 
@@ -170,110 +166,25 @@ public class InstagramAuthActivity extends AppCompatActivity {
         instagrramAuthWebView.reload();
     }
 
-
-    InstagramAuthCallbackListener instagramAuthCallbackListener = new InstagramAuthCallbackListener() {
-        @Override
-        public boolean onRedirect(String actualRedirectURL) {
-            Log.v("IntagramAuthActivity", "URL: " + redirectURL);
-
-            Uri actualRedirectURI = Uri.parse(actualRedirectURL);
-            Uri redirectURI = Uri.parse(redirectURL);
-            boolean flag = actualRedirectURL.contains("code");
-//            if (actualRedirectURL.startsWith("http://tanishqbhatia.epizy.com/identify.php") && flag) {
-//                String tokenHash = /*Utils.splitQuery(fragment);*/ new MyJavaScriptInterface().processHTML(actualRedirectURL);
-//                if (tokenHash != null && tokenHash.equals("")) {
-//                    IGSession IGSession = new IGSession(tokenHash);
-//                    InstagramEngine.getInstance(InstagramAuthActivity.this).setSession(IGSession);
-//                    InstagramEngine.getInstance(InstagramAuthActivity.this).getInstagramLoginButtonCallback().onSuccess(IGSession);
-//                } else {
-//                    InstagramException instagramException = new InstagramException("Error: Something went wrong, please try again.");
-//                    InstagramEngine.getInstance(InstagramAuthActivity.this).getInstagramLoginButtonCallback().onError(instagramException);
-//                }
-//                finish();
-//            }
-
-//            try {
-//
-//                if (actualRedirectURI.getScheme().equals(redirectURI.getScheme()) && actualRedirectURI.getHost().equals(redirectURI.getHost())) {
-//
-//                    //Fragment contains the access token i.e. http://your-redirect-uri#access_token=ACCESS-TOKEN
-//                    String fragment = actualRedirectURI.getFragment();
-//
-//                    if (null != fragment && !fragment.isEmpty()) {
-//
-//                        Map<String, String> tokenHash = Utils.splitQuery(fragment);
-//
-//                        if (tokenHash.size() > 0 && tokenHash.containsKey("access_token")) {
-//                            //TODO Save access token and return success callback
-//
-//                            IGSession IGSession = new IGSession(tokenHash.get("access_token"));
-//
-//                            InstagramEngine.getInstance(InstagramAuthActivity.this).setSession(IGSession);
-//
-//                            InstagramEngine.getInstance(InstagramAuthActivity.this).getInstagramLoginButtonCallback().onSuccess(IGSession);
-//                            Log.v("IntagramAuthActivity", "Access Token: " + tokenHash.get("access_token"));
-//
-//                        } else {
-//                            //TODO Show error dialog OR return failure callback
-//                            Log.v("IntagramAuthActivity", "Oh Crap....");
-//
-//                            InstagramException instagramException = new InstagramException("Error: Something went wrong, please try again.");
-//
-//                            InstagramEngine.getInstance(InstagramAuthActivity.this).getInstagramLoginButtonCallback().onError(instagramException);
-//
-//                        }
-//                    } else {
-//                        //TODO Show error dialog OR return failure callback
-//
-//                        String errorDescription = actualRedirectURI.getQueryParameter("error_description");
-//                        String error = actualRedirectURI.getQueryParameter("error");
-//                        String errorReason = actualRedirectURI.getQueryParameter("errorReason");
-//
-//                        Log.v("IntagramAuthActivity", "Oh Crap...." + " Error:" + error + " Description: " + errorDescription);
-//
-//                        InstagramException instagramException = new InstagramException(error, errorReason);
-//
-//                        InstagramEngine.getInstance(InstagramAuthActivity.this).getInstagramLoginButtonCallback().onError(instagramException);
-//
-//                    }
-//                    finish();
-//                    return true;
-//                }
-//
-//            } catch (UnsupportedEncodingException e) {
-//                e.printStackTrace();
-//            }
-
-            return false;
-        }
-    };
-
     InstagramLoginCallbackListener instagramLoginCallbackListener = new InstagramLoginCallbackListener() {
         @Override
         public void onSuccess(IGSession session) {
-
             Bundle responseSession = new Bundle();
             responseSession.putSerializable(InstagramKitConstants.kSessionKey, session);
-
             Intent intent = new Intent();
             intent.putExtras(responseSession);
             setResult(RESULT_OK, intent);
             finish();
-
         }
 
         @Override
         public void onCancel() {
-
             Bundle responseSession = new Bundle();
             responseSession.putString("message", "Something went wrong, try again.");
-
             Intent intent = new Intent();
             intent.putExtras(responseSession);
-
             setResult(RESULT_CANCELED, intent);
             finish();
-
         }
 
         @Override

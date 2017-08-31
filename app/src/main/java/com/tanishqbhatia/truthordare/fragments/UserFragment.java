@@ -74,7 +74,7 @@ public class UserFragment extends Fragment {
         User user = new PrefsMethods().getUser();
         if (user != null) {
             getActivity().setTitle(user.getUsername());
-            fullNameTv.setText(user.getFullName());
+            fullNameTv.setText(Methods.decode(user.getFullName()));
             bioTv.setText(Methods.decode(user.getBio()));
             new CustomImageView(profilePictureIv).setBorder().setScaleType().load(null, user.getProfilePictureURL());
         } else {
