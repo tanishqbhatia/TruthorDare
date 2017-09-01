@@ -12,6 +12,8 @@ public class ServerResponse {
     private Boolean response;
     @SerializedName("access_token")
     private String accessToken;
+    @SerializedName("user_header")
+    private User user;
 
     public Boolean getResponse() {
         return response;
@@ -27,5 +29,13 @@ public class ServerResponse {
 
     public void setAccessToken(String accessToken) {
         this.accessToken = accessToken;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

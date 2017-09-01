@@ -15,7 +15,6 @@ import com.tanishqbhatia.truthordare.R;
 import com.tanishqbhatia.truthordare.abstracts.Identify;
 import com.tanishqbhatia.truthordare.abstracts.Request;
 import com.tanishqbhatia.truthordare.models.ServerResponse;
-import com.tanishqbhatia.truthordare.models.User;
 import com.tanishqbhatia.truthordare.utils.constants.ColorCons;
 import com.tanishqbhatia.truthordare.utils.methods.Methods;
 import com.tanishqbhatia.truthordare.utils.prefs.PrefsMethods;
@@ -38,6 +37,11 @@ public class IdentificationActivity extends Identify {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         activity = Methods.init(this);
         setupToolbar();
     }
@@ -87,9 +91,9 @@ public class IdentificationActivity extends Identify {
                     id,
                     username,
                     fullName,
-                    String.valueOf(responseObject.getMediaCount()),
-                    String.valueOf(responseObject.getFollowsCount()),
-                    String.valueOf(responseObject.getFollowedByCount()),
+                    responseObject.getMediaCount(),
+                    responseObject.getFollowsCount(),
+                    responseObject.getFollowedByCount(),
                     bio,
                     responseObject.getWebsite(),
                     profilePictureUrl);
@@ -115,14 +119,15 @@ public class IdentificationActivity extends Identify {
                 if(response != null && response.body() != null) {
                     Methods.showLog("IdentificationActivity", "onResponse()", String.valueOf(response.body().getResponse()));
                     if (response.body().getResponse()) {
-                        User user = new User();
+                        /*User user = new User();
                         user.setId(id);
                         user.setAccessToken(accessToken);
                         user.setUsername(username);
                         user.setFullName(fullName);
                         user.setBio(bio);
                         user.setProfilePictureURL(profilePictureUrl);
-                        new PrefsMethods().saveUser(user);
+                        new PrefsMethods().saveUser(user);*/
+                        new PrefsMethods().saveId(id);
                         Methods.launchOnly(MainActivity.class);
                     } else
                         new Toast().colorRed().priorityHigh().message("Unable to connect, please try again later.").show();

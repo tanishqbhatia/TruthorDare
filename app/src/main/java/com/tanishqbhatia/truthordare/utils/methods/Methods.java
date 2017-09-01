@@ -13,8 +13,11 @@ import android.view.View;
 
 import com.tanishqbhatia.truthordare.App;
 import com.tanishqbhatia.truthordare.R;
+import com.tanishqbhatia.truthordare.activities.IdentificationActivity;
 import com.tanishqbhatia.truthordare.activities.IntroductionActivity;
+import com.tanishqbhatia.truthordare.activities.TermsandConditionsActivity;
 import com.tanishqbhatia.truthordare.utils.prefs.Prefs;
+import com.tanishqbhatia.truthordare.utils.prefs.PrefsMethods;
 
 import java.io.UnsupportedEncodingException;
 
@@ -28,10 +31,10 @@ import butterknife.Unbinder;
  */
 
 public class Methods {
-    public static void showLog(String TAG, String... messages) {
+    public static void showLog(String TAG, Object... messages) {
         StringBuilder builder = new StringBuilder();
-        for (String message : messages) {
-            builder.append(message);
+        for (Object message : messages) {
+            builder.append(String.valueOf(message));
             builder.append("\n");
         }
         String message = builder.substring(0, builder.lastIndexOf("\n"));
@@ -41,7 +44,17 @@ public class Methods {
     public static Activity init(Activity activity) {
         App.get().setCurrentActivity(activity);
         ButterKnife.bind(activity);
+        if (activity instanceof IntroductionActivity
+                || activity instanceof TermsandConditionsActivity
+                || activity instanceof IdentificationActivity)
+            return activity;
+        else checkIdentification();
         return activity;
+    }
+
+    private static void checkIdentification() {
+        if (!new PrefsMethods().isIdentified())
+            launchOnly(IntroductionActivity.class);
     }
 
     public static Unbinder init(Fragment fragment, View view) {
@@ -80,14 +93,18 @@ public class Methods {
     }
 
     public static void cleanSlateProtocol() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(App.get().getCurrentActivity(), R.style.AppTheme_AlertDialog);
-        builder.setCancelable(false).setMessage(R.string.notIdentified)
-                .setPositiveButton(R.string.okay, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        Prefs.clear();
-                        launchOnly(IntroductionActivity.class);
-                    }
-                }).create().show();
+        try {
+            AlertDialog.Builder builder = new AlertDialog.Builder(App.get().getCurrentActivity(), R.style.AppTheme_AlertDialog);
+            builder.setCancelable(false).setMessage(R.string.notIdentified)
+                    .setPositiveButton(R.string.okay, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            Prefs.clear();
+                            launchOnly(IntroductionActivity.class);
+                        }
+                    }).create().show();
+        } catch (Exception e) {
+            Methods.showLog("Methods", "cleanSlateProtocol()", e.getMessage());
+        }
     }
 
     public static void launch(Class targetClass) {
@@ -102,7 +119,7 @@ public class Methods {
     }
 
     public static void changeBackgroundColor(final View view, int targetColor, int duration) {
-        ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), ((ColorDrawable)view.getBackground()).getColor(), targetColor);
+        ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), ((ColorDrawable) view.getBackground()).getColor(), targetColor);
         colorAnimation.setDuration(duration);
         colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
 

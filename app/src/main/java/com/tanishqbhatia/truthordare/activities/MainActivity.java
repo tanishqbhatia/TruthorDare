@@ -1,138 +1,151 @@
 package com.tanishqbhatia.truthordare.activities;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.internal.BottomNavigationItemView;
-import android.support.design.internal.BottomNavigationMenuView;
-import android.support.design.widget.BottomNavigationView;
-import android.support.v4.view.ViewPager;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
+import android.widget.FrameLayout;
 
+import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
+import com.aurelhubert.ahbottomnavigation.AHBottomNavigationAdapter;
+import com.tanishqbhatia.backstack.FragNavController;
 import com.tanishqbhatia.truthordare.R;
-import com.tanishqbhatia.truthordare.adapters.MainAdapter;
+import com.tanishqbhatia.truthordare.fragments.HomeFragment;
+import com.tanishqbhatia.truthordare.fragments.UserFragment;
+import com.tanishqbhatia.truthordare.utils.constants.ColorCons;
 import com.tanishqbhatia.truthordare.utils.constants.Cons;
 import com.tanishqbhatia.truthordare.utils.methods.Methods;
 import com.tanishqbhatia.truthordare.utils.prefs.PrefsMethods;
 
-import java.lang.reflect.Field;
-
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+    @BindView(R.id.container)
+    FrameLayout container;
     @BindView(R.id.navigationBnv)
-    BottomNavigationView navigationBnv;
-    @BindView(R.id.contentVp)
-    ViewPager contentVp;
-    private MainAdapter mainAdapter;
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.navigation_home:
-                    contentVp.setCurrentItem(Cons.NAVIGATION_HOME);
-                    return true;
-                case R.id.navigation_search:
-                    contentVp.setCurrentItem(Cons.NAVIGATION_SEARCH);
-                    return true;
-                case R.id.navigation_dashboard:
-                    contentVp.setCurrentItem(Cons.NAVIGATION_DASHBOARD);
-                    return true;
-                case R.id.navigation_notifications:
-                    contentVp.setCurrentItem(Cons.NAVIGATION_NOTIFICATIONS);
-                    return true;
-                case R.id.navigation_user:
-                    contentVp.setCurrentItem(Cons.NAVIGATION_USER);
-                    return true;
-            }
-            return false;
-        }
-    };
+    AHBottomNavigation navigationBnv;
 
-    private ViewPager.OnPageChangeListener mOnPageChangeListener
-            = new ViewPager.OnPageChangeListener() {
-        @Override
-        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-        }
-
-        @Override
-        public void onPageSelected(int position) {
-            switch (position) {
-                case Cons.NAVIGATION_HOME:
-                    navigationBnv.setSelectedItemId(R.id.navigation_home);
-                    break;
-                case Cons.NAVIGATION_SEARCH:
-                    navigationBnv.setSelectedItemId(R.id.navigation_search);
-                    break;
-                case Cons.NAVIGATION_DASHBOARD:
-                    navigationBnv.setSelectedItemId(R.id.navigation_dashboard);
-                    break;
-                case Cons.NAVIGATION_NOTIFICATIONS:
-                    navigationBnv.setSelectedItemId(R.id.navigation_notifications);
-                    break;
-                case Cons.NAVIGATION_USER:
-                    navigationBnv.setSelectedItemId(R.id.navigation_user);
-                    break;
-            }
-        }
-
-        @Override
-        public void onPageScrollStateChanged(int state) {
-
-        }
-    };
+    private Bundle savedInstanceState;
+    private FragNavController mNavController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.savedInstanceState = savedInstanceState;
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         Methods.init(this);
-        if(! new PrefsMethods().isIdentified()) {
+        if (!new PrefsMethods().isIdentified()) {
             Methods.launchOnly(IntroductionActivity.class);
         }
         setToolbar();
+        setBottomNavigation();
         setListeners();
-        setAdapters();
+        initHome();
+    }
+
+    private void setBottomNavigation() {
+        AHBottomNavigationAdapter bottomNavigationAdapter = new AHBottomNavigationAdapter(this, R.menu.navigation);
+        bottomNavigationAdapter.setupWithBottomNavigation(navigationBnv);
+
+//        navigationBnv.manageFloatingActionButtonBehavior(floatingActionButton);
+        navigationBnv.setDefaultBackgroundColor(ColorCons.GREY_50);
+//        navigationBnv.setBehaviorTranslationEnabled(false);
+        navigationBnv.setAccentColor(ColorCons.BLACK);
+        navigationBnv.setInactiveColor(ColorCons.GREY_500);
+//        navigationBnv.setForceTint(true);
+        navigationBnv.setTitleState(AHBottomNavigation.TitleState.ALWAYS_HIDE);
+        navigationBnv.setCurrentItem(0);
+//        navigationBnv.setNotificationBackgroundColor(ColorCons.BLUE_500);
+    }
+
+    private void initHome() {
     }
 
     private void setToolbar() {
         setSupportActionBar(toolbar);
     }
 
-    private void setAdapters() {
-        mainAdapter = new MainAdapter(getSupportFragmentManager());
-        contentVp.setAdapter(mainAdapter);
-    }
-
     private void setListeners() {
-        navigationBnv.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        disableShiftMode(navigationBnv);
-        contentVp.addOnPageChangeListener(mOnPageChangeListener);
+        mNavController = FragNavController.newBuilder(savedInstanceState, getSupportFragmentManager(), R.id.container)
+                .transactionListener(new FragNavController.TransactionListener() {
+                    @Override
+                    public void onTabTransaction(Fragment fragment, int index) {
+                        // If we have a backstack, show the back button
+                        if (toolbar != null && mNavController != null) {
+                            getSupportActionBar().setDisplayHomeAsUpEnabled(!mNavController.isRootFragment());
+                        }
+                    }
+
+                    @Override
+                    public void onFragmentTransaction(Fragment fragment, FragNavController.TransactionType transactionType) {
+                        //do fragmentty stuff. Maybe change title, I'm not going to tell you how to live your life
+                        // If we have a backstack, show the back button
+                        if (toolbar != null && mNavController != null) {
+                            getSupportActionBar().setDisplayHomeAsUpEnabled(!mNavController.isRootFragment());
+                        }
+                    }
+                })
+                .rootFragmentListener(new FragNavController.RootFragmentListener() {
+                    @Override
+                    public Fragment getRootFragment(int index) {
+                        switch (index) {
+                            case Cons.NAVIGATION_HOME:
+                                return new HomeFragment();
+                            case Cons.NAVIGATION_SEARCH:
+                                return new HomeFragment();
+                            case Cons.NAVIGATION_DASHBOARD:
+                                return new HomeFragment();
+                            case Cons.NAVIGATION_NOTIFICATIONS:
+                                return new HomeFragment();
+                            case Cons.NAVIGATION_USER:
+                                return new UserFragment();
+                        }
+                        throw new IllegalStateException("Invalid index.");
+                    }
+                }, Cons.NAVIGATION_TOTAL)
+                .build();
+
+        navigationBnv.setOnTabSelectedListener(new AHBottomNavigation.OnTabSelectedListener() {
+            @Override
+            public boolean onTabSelected(int position, boolean wasSelected) {
+                if (!wasSelected)
+                    mNavController.switchTab(position);
+                else mNavController.clearStack();
+                return true;
+            }
+        });
     }
 
-    private void disableShiftMode(BottomNavigationView view) {
-        BottomNavigationMenuView menuView = (BottomNavigationMenuView) view.getChildAt(0);
-        try {
-            Field shiftingMode = menuView.getClass().getDeclaredField("mShiftingMode");
-            shiftingMode.setAccessible(true);
-            shiftingMode.setBoolean(menuView, false);
-            shiftingMode.setAccessible(false);
-            for (int i = 0; i < menuView.getChildCount(); i++) {
-                BottomNavigationItemView item = (BottomNavigationItemView) menuView.getChildAt(i);
-                item.setShiftingMode(false);
-                item.setChecked(item.getItemData().isChecked());
-            }
-        } catch (NoSuchFieldException e) {
-            Methods.showLog("Methods", "disableShiftMode()", "Unable to get shift mode field", e.getMessage());
-        } catch (IllegalAccessException e) {
-            Methods.showLog("Methods", "disableShiftMode()", "Unable to change value of shift mode", e.getMessage());
+    @Override
+    public void onBackPressed() {
+        if (!mNavController.isRootFragment()) {
+            mNavController.popFragment();
+        } else {
+            super.onBackPressed();
         }
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (mNavController != null) {
+            mNavController.onSaveInstanceState(outState);
+        }
+    }
+
+    public void pushFragment(Fragment fragment) {
+        if (mNavController != null) {
+            mNavController.pushFragment(fragment);
+        }
+    }
 }

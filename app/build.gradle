@@ -42,6 +42,7 @@ dependencies {
     annotationProcessor libraries.butterknifeCompiler
     compile libraries.eventbus
     compile libraries.appintro
+    compile libraries.bottomNavigation
     debugCompile libraries.leakcanary
     testCompile libraries.leakcanaryNoOp
     releaseCompile libraries.leakcanaryNoOp

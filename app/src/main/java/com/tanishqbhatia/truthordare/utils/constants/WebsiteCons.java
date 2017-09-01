@@ -12,4 +12,5 @@ import com.tanishqbhatia.truthordare.R;
 public class WebsiteCons {
     public static final String WEBSITE_URL_ORIGINAL = App.get().getResources().getString(R.string.website_url);
     public static final String IDENTIFY = "identify.php";
+    public static final String GET_USER_HEADER = "getUserHeader.php";
 }

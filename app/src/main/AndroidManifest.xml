@@ -45,15 +45,6 @@
         <meta-data
             android:name="com.tanishqbhatia.instagramauthorization.InstagramAppRedirectURL"
             android:value="@string/instagram_callback_url" />
-
-        <activity
-            android:name="com.tanishqbhatia.instagram.activities.AuthorizationActivity"
-            android:label="@string/title_activity_authorization"
-            android:parentActivityName=".activities.IdentificationActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.tanishqbhatia.truthordare.activities.IdentificationActivity" />
-        </activity>
     </application>
 
 </manifest>

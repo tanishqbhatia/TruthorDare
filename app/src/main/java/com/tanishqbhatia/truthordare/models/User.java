@@ -1,5 +1,7 @@
 package com.tanishqbhatia.truthordare.models;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by Tanishq Bhatia on 19-08-2017 at 10:17.
  * Email address : crash0er@gmail.com
@@ -10,9 +12,14 @@ public class User {
     private String id;
     private String accessToken;
     private String username;
+    @SerializedName("full_name")
     private String fullName;
-    private String profilePictureURL;
+    private Integer posts;
+    private Integer followers;
+    private Integer following;
     private String bio;
+    @SerializedName("profile_picture_url")
+    private String profilePictureURL;
 
     public String getId() {
         return id;
@@ -20,6 +27,14 @@ public class User {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getAccessToken() {
+        return accessToken;
+    }
+
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
     }
 
     public String getUsername() {
@@ -38,12 +53,28 @@ public class User {
         this.fullName = fullName;
     }
 
-    public String getProfilePictureURL() {
-        return profilePictureURL;
+    public Integer getPosts() {
+        return posts;
     }
 
-    public void setProfilePictureURL(String profilePictureURL) {
-        this.profilePictureURL = profilePictureURL;
+    public void setPosts(Integer posts) {
+        this.posts = posts;
+    }
+
+    public Integer getFollowers() {
+        return followers;
+    }
+
+    public void setFollowers(Integer followers) {
+        this.followers = followers;
+    }
+
+    public Integer getFollowing() {
+        return following;
+    }
+
+    public void setFollowing(Integer following) {
+        this.following = following;
     }
 
     public String getBio() {
@@ -54,11 +85,11 @@ public class User {
         this.bio = bio;
     }
 
-    public String getAccessToken() {
-        return accessToken;
+    public String getProfilePictureURL() {
+        return profilePictureURL;
     }
 
-    public void setAccessToken(String accessToken) {
-        this.accessToken = accessToken;
+    public void setProfilePictureURL(String profilePictureURL) {
+        this.profilePictureURL = profilePictureURL;
     }
 }

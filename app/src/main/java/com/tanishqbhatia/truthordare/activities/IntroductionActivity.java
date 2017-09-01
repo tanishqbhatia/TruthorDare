@@ -21,6 +21,7 @@ public class IntroductionActivity extends AppIntro {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Methods.init(this);
         showSkipButton(false);
         setColorTransitionsEnabled(true);
         setColorDoneText(ColorCons.WHITE);

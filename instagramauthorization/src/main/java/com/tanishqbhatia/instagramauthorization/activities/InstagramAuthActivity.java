@@ -137,92 +137,93 @@ public class InstagramAuthActivity extends AppCompatActivity {
                 if (response != null) {
                     Gson gson = new Gson();
                     ServerResponse serverResponse = gson.fromJson(response, ServerResponse.class);
-                    if (serverResponse != null && serverResponse.getResponse()) {
-                        response = serverResponse.getAccessToken();
-                        if (response != null && response.length() > 0) {
-                            IGSession IGSession = new IGSession(response);
-                            InstagramEngine.getInstance(InstagramAuthActivity.this).setSession(IGSession);
-                            InstagramEngine.getInstance(InstagramAuthActivity.this).getInstagramLoginButtonCallback().onSuccess(IGSession);
+                    if (serverResponse != null) {
+                        if (serverResponse.getResponse()) {
+                            response = serverResponse.getAccessToken();
+                            if (response != null && response.length() > 0) {
+                                IGSession IGSession = new IGSession(response);
+                                InstagramEngine.getInstance(InstagramAuthActivity.this).setSession(IGSession);
+                                InstagramEngine.getInstance(InstagramAuthActivity.this).getInstagramLoginButtonCallback().onSuccess(IGSession);
+                            } else {
+                                InstagramException instagramException = new InstagramException("Error: Something went wrong, please try again.");
+                                InstagramEngine.getInstance(InstagramAuthActivity.this).getInstagramLoginButtonCallback().onError(instagramException);
+                            }
                         } else {
-                            InstagramException instagramException = new InstagramException("Error: Something went wrong, please try again.");
-                            InstagramEngine.getInstance(InstagramAuthActivity.this).getInstagramLoginButtonCallback().onError(instagramException);
+                            Toast.makeText(InstagramAuthActivity.this, "Error while connecting to instagram, please try again.", Toast.LENGTH_SHORT).show();
                         }
                     } else {
-                        Toast.makeText(InstagramAuthActivity.this, "Error while connecting to instagram, please try again.", Toast.LENGTH_SHORT).show();
-                        initAuth();
+                        InstagramException instagramException = new InstagramException("Error: Something went wrong, please try again.");
+                        InstagramEngine.getInstance(InstagramAuthActivity.this).getInstagramLoginButtonCallback().onError(instagramException);
                     }
-                } else {
-                    InstagramException instagramException = new InstagramException("Error: Something went wrong, please try again.");
-                    InstagramEngine.getInstance(InstagramAuthActivity.this).getInstagramLoginButtonCallback().onError(instagramException);
+                    finish();
+                } else initAuth();
+            } catch(Exception e){
+                    e.printStackTrace();
                 }
-                finish();
-            } catch (Exception e) {
-                e.printStackTrace();
             }
         }
+
+        private void initAuth() {
+            instagrramAuthWebView.reload();
+        }
+
+        InstagramLoginCallbackListener instagramLoginCallbackListener = new InstagramLoginCallbackListener() {
+            @Override
+            public void onSuccess(IGSession session) {
+                Bundle responseSession = new Bundle();
+                responseSession.putSerializable(InstagramKitConstants.kSessionKey, session);
+                Intent intent = new Intent();
+                intent.putExtras(responseSession);
+                setResult(RESULT_OK, intent);
+                finish();
+            }
+
+            @Override
+            public void onCancel() {
+                Bundle responseSession = new Bundle();
+                responseSession.putString("message", "Something went wrong, try again.");
+                Intent intent = new Intent();
+                intent.putExtras(responseSession);
+                setResult(RESULT_CANCELED, intent);
+                finish();
+            }
+
+            @Override
+            public void onError(InstagramException error) {
+
+                Bundle responseSession = new Bundle();
+                responseSession.putString("message", error.getMessage());
+                responseSession.putString("error", error.getErrorType());
+                responseSession.putString("error_reason", error.getErrorReason());
+
+                Intent intent = new Intent();
+                intent.putExtras(responseSession);
+
+                setResult(RESULT_CANCELED, intent);
+                finish();
+
+
+            }
+        };
+
+        @SuppressWarnings("deprecation")
+        private static void ClearCookies(Context context) {
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
+                Log.d("IGAuthActivity", "Using ClearCookies code for API >=" + String.valueOf(Build.VERSION_CODES.LOLLIPOP_MR1));
+                CookieManager.getInstance().removeAllCookies(null);
+                CookieManager.getInstance().flush();
+            } else {
+                Log.d("IGAuthActivity", "Using ClearCookies code for API <" + String.valueOf(Build.VERSION_CODES.LOLLIPOP_MR1));
+                CookieSyncManager cookieSyncMngr = CookieSyncManager.createInstance(context);
+                cookieSyncMngr.startSync();
+                CookieManager cookieManager = CookieManager.getInstance();
+                cookieManager.removeAllCookie();
+                cookieManager.removeSessionCookie();
+                cookieSyncMngr.stopSync();
+                cookieSyncMngr.sync();
+            }
+        }
+
+
     }
-
-    private void initAuth() {
-        instagrramAuthWebView.reload();
-    }
-
-    InstagramLoginCallbackListener instagramLoginCallbackListener = new InstagramLoginCallbackListener() {
-        @Override
-        public void onSuccess(IGSession session) {
-            Bundle responseSession = new Bundle();
-            responseSession.putSerializable(InstagramKitConstants.kSessionKey, session);
-            Intent intent = new Intent();
-            intent.putExtras(responseSession);
-            setResult(RESULT_OK, intent);
-            finish();
-        }
-
-        @Override
-        public void onCancel() {
-            Bundle responseSession = new Bundle();
-            responseSession.putString("message", "Something went wrong, try again.");
-            Intent intent = new Intent();
-            intent.putExtras(responseSession);
-            setResult(RESULT_CANCELED, intent);
-            finish();
-        }
-
-        @Override
-        public void onError(InstagramException error) {
-
-            Bundle responseSession = new Bundle();
-            responseSession.putString("message", error.getMessage());
-            responseSession.putString("error", error.getErrorType());
-            responseSession.putString("error_reason", error.getErrorReason());
-
-            Intent intent = new Intent();
-            intent.putExtras(responseSession);
-
-            setResult(RESULT_CANCELED, intent);
-            finish();
-
-
-        }
-    };
-
-    @SuppressWarnings("deprecation")
-    private static void ClearCookies(Context context) {
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
-            Log.d("IGAuthActivity", "Using ClearCookies code for API >=" + String.valueOf(Build.VERSION_CODES.LOLLIPOP_MR1));
-            CookieManager.getInstance().removeAllCookies(null);
-            CookieManager.getInstance().flush();
-        } else {
-            Log.d("IGAuthActivity", "Using ClearCookies code for API <" + String.valueOf(Build.VERSION_CODES.LOLLIPOP_MR1));
-            CookieSyncManager cookieSyncMngr = CookieSyncManager.createInstance(context);
-            cookieSyncMngr.startSync();
-            CookieManager cookieManager = CookieManager.getInstance();
-            cookieManager.removeAllCookie();
-            cookieManager.removeSessionCookie();
-            cookieSyncMngr.stopSync();
-            cookieSyncMngr.sync();
-        }
-    }
-
-
-}

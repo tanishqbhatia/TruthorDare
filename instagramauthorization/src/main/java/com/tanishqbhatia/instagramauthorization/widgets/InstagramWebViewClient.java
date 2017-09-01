@@ -17,8 +17,9 @@ public class InstagramWebViewClient extends WebViewClient {
         Log.i("url", "onPageFinished: " + url);
         view.setVisibility(View.VISIBLE);
         view.bringToFront();
-        boolean flag = url.contains("code");
+        boolean flag = url.contains("code") || url.contains("error");
         if (url.startsWith("http://www.truthordare.ml/TruthorDare/identify.php") && flag) {
+            view.setVisibility(View.GONE);
             view.loadUrl("javascript:window.HTMLOUT.processHTML('<head>'+document.getElementsByTagName('html')[0].innerHTML+'</head>');");
         }
         super.onPageFinished(view, url);

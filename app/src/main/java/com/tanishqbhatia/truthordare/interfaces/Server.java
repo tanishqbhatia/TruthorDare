@@ -23,4 +23,9 @@ public interface Server {
                                           @Field(PrefsCons.FULL_NAME) String fullName,
                                           @Field(PrefsCons.BIO) String bio,
                                           @Field(PrefsCons.PROFILE_PICTURE_URL) String profilePictureUrl);
+
+    @FormUrlEncoded
+    @POST(WebsiteCons.GET_USER_HEADER)
+    Call<ServerResponse> getUserHeader(@Field(PrefsCons.ID) String id,
+                                       @Field(PrefsCons.ACCESS_TOKEN) String accessToken);
 }
