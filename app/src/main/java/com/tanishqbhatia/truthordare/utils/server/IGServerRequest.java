@@ -1,4 +1,4 @@
-package com.tanishqbhatia.truthordare.abstracts;
+package com.tanishqbhatia.truthordare.utils.server;
 
 import com.tanishqbhatia.instagramauthorization.engine.InstagramEngine;
 import com.tanishqbhatia.instagramauthorization.exceptions.InstagramException;
@@ -20,8 +20,7 @@ import java.util.List;
  */
 
 public class IGServerRequest {
-    public boolean getInstagramPosts() {
-        final boolean[] response = new boolean[1];
+    public void getInstagramPosts() {
         InstagramEngine.getInstance(App.get().getCurrentActivity()).getMediaForUser(App.get().getCurrentActivity(), new InstagramAPIResponseCallback<ArrayList<IGMedia>>() {
             @Override
             public void onResponse(ArrayList<IGMedia> responseObject, IGPagInfo pageInfo) {
@@ -31,15 +30,13 @@ public class IGServerRequest {
                         instagramPostsUrls.add(igMedia.getImages().getThumbnail().getUrl());
                     }
                     EventBus.getDefault().postSticky(instagramPostsUrls);
-                    response[0] = true;
                 } else new Toast().colorRed().priorityHigh().message("Unable to fetch instagram posts, please try again later.").show();
             }
 
             @Override
             public void onFailure(InstagramException exception) {
-                response[0] = false;
+
             }
         });
-        return response[0];
     }
 }

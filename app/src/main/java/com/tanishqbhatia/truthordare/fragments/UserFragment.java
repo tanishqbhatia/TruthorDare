@@ -13,13 +13,16 @@ import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.tanishqbhatia.recyclerview.CustomRecyclerView;
 import com.tanishqbhatia.truthordare.R;
-import com.tanishqbhatia.truthordare.abstracts.IGServerRequest;
-import com.tanishqbhatia.truthordare.abstracts.ServerRequest;
 import com.tanishqbhatia.truthordare.adapters.InstagramPostsAdapter;
-import com.tanishqbhatia.truthordare.adapters.PostsAdapter;
+import com.tanishqbhatia.truthordare.adapters.UserPostsAdapter;
+import com.tanishqbhatia.truthordare.models.GetUser;
+import com.tanishqbhatia.truthordare.models.Post;
 import com.tanishqbhatia.truthordare.models.User;
+import com.tanishqbhatia.truthordare.models.UserPosts;
 import com.tanishqbhatia.truthordare.utils.imageview.CustomImageView;
 import com.tanishqbhatia.truthordare.utils.methods.Methods;
+import com.tanishqbhatia.truthordare.utils.server.IGServerRequest;
+import com.tanishqbhatia.truthordare.utils.server.ServerRequest;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -51,8 +54,8 @@ public class UserFragment extends Fragment {
     TextView bioTv;
     @BindView(R.id.instagramPostsRv)
     CustomRecyclerView instagramPostsRv;
-    @BindView(R.id.postsRv)
-    CustomRecyclerView postsRv;
+    @BindView(R.id.userPostsRv)
+    CustomRecyclerView userPostsRv;
     Unbinder unbinder;
     private Activity activity;
 
@@ -74,17 +77,15 @@ public class UserFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         activity = getActivity();
         initHeader();
-        initInstagramPosts();
-        initPosts();
         /*setListeners();
         setAdapters();*/
     }
 
-    private void initPosts() {
-        new IGServerRequest().getInstagramPosts();
+    private void initUserPosts() {
+        new ServerRequest().getUserPosts();
     }
 
-    private void initInstagramPosts() {
+    private void initUserInstagramPosts() {
         new IGServerRequest().getInstagramPosts();
     }
 
@@ -93,8 +94,9 @@ public class UserFragment extends Fragment {
     }
 
     @Subscribe(priority = 1, sticky = true, threadMode = ThreadMode.MAIN)
-    public void onUserHeader(User user) {
-        if (user != null) {
+    public void onUserHeader(GetUser getUser) {
+        if (getUser != null) {
+            User user = getUser.getUser();
             getActivity().setTitle(user.getUsername());
             fullNameTv.setText(Methods.decode(user.getFullName()));
             postsCountTv.setText(String.valueOf(user.getPosts()));
@@ -102,6 +104,7 @@ public class UserFragment extends Fragment {
             followingCountTv.setText(String.valueOf(user.getFollowing()));
             bioTv.setText(Methods.decode(user.getBio()));
             new CustomImageView(profilePictureIv).setBorder().setScaleType().load(null, user.getProfilePictureURL());
+            initUserInstagramPosts();
         } else {
             Methods.cleanSlateProtocol();
         }
@@ -111,13 +114,27 @@ public class UserFragment extends Fragment {
     public void onInstagramPosts(List<String> instagramPostsUrls) {
         if (instagramPostsUrls != null) {
             List<InstagramPostsAdapter> instagramPostsAdapterList = new ArrayList<>();
-            List<PostsAdapter> postsAdapterList = new ArrayList<>();
             for(String url : instagramPostsUrls) {
                 instagramPostsAdapterList.add(new InstagramPostsAdapter((url)));
-                postsAdapterList.add(new PostsAdapter((url)));
             }
             instagramPostsRv.addCells(instagramPostsAdapterList);
-            postsRv.addCells(postsAdapterList);
+            initUserPosts();
+        } else {
+            Methods.cleanSlateProtocol();
+        }
+    }
+
+    @Subscribe(priority = 3, sticky = true, threadMode = ThreadMode.MAIN)
+    public void onUserPostsList(UserPosts userPosts) {
+        if (userPosts != null) {
+            List<Post> userPostsList = userPosts.getUserPostsList();
+            List<UserPostsAdapter> userPostsAdapterList = new ArrayList<>();
+            for(int i=0; i<userPostsList.size(); i++) {
+                Post post = userPostsList.get(i);
+                String url = post.getPostUrl();
+                userPostsAdapterList.add(new UserPostsAdapter((url)));
+            }
+            userPostsRv.addCells(userPostsAdapterList);
         } else {
             Methods.cleanSlateProtocol();
         }

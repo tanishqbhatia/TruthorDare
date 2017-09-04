@@ -28,7 +28,7 @@ public class InstagramPostsAdapter extends CustomCell<String, InstagramPostsAdap
 
     @Override
     protected int getLayoutRes() {
-        return R.layout.instagram_post;
+        return R.layout.post;
     }
 
     @NonNull
@@ -39,13 +39,13 @@ public class InstagramPostsAdapter extends CustomCell<String, InstagramPostsAdap
 
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder holder, int position, @NonNull Context context, Object payload) {
-        new CustomImageView(holder.instagramPostIv).setScaleType().load(null, getItem());
+        new CustomImageView(holder.postIv).setScaleType().load(null, getItem());
     }
 
     class ViewHolder extends CustomViewHolder {
 
-        @BindView(R.id.instagramPostIv)
-        SimpleDraweeView instagramPostIv;
+        @BindView(R.id.postIv)
+        SimpleDraweeView postIv;
 
         public ViewHolder(View cellView) {
             super(cellView);

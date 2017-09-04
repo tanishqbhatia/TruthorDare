@@ -1,6 +1,8 @@
 package com.tanishqbhatia.truthordare.interfaces;
 
+import com.tanishqbhatia.truthordare.models.GetUser;
 import com.tanishqbhatia.truthordare.models.ServerResponse;
+import com.tanishqbhatia.truthordare.models.UserPosts;
 import com.tanishqbhatia.truthordare.utils.constants.PrefsCons;
 import com.tanishqbhatia.truthordare.utils.constants.WebsiteCons;
 
@@ -26,6 +28,11 @@ public interface Server {
 
     @FormUrlEncoded
     @POST(WebsiteCons.GET_USER_HEADER)
-    Call<ServerResponse> getUserHeader(@Field(PrefsCons.ID) String id,
-                                       @Field(PrefsCons.ACCESS_TOKEN) String accessToken);
+    Call<GetUser> getUserHeader(@Field(PrefsCons.ID) String id,
+                                @Field(PrefsCons.ACCESS_TOKEN) String accessToken);
+
+    @FormUrlEncoded
+    @POST(WebsiteCons.GET_USER_POSTS)
+    Call<UserPosts> getUserPosts(@Field(PrefsCons.ID) String id,
+                                 @Field(PrefsCons.ACCESS_TOKEN) String accessToken);
 }
