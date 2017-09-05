@@ -40,7 +40,6 @@ dependencies {
     compile libraries.fresco
     compile libraries.butterknife
     annotationProcessor libraries.butterknifeCompiler
-    compile libraries.eventbus
     compile libraries.appintro
     compile libraries.bottomNavigation
     debugCompile libraries.leakcanary
@@ -53,4 +52,5 @@ dependencies {
 
     testCompile libraries.junit
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.android.support:support-v4:26.+'
 }

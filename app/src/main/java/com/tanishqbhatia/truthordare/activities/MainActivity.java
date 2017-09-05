@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
                             case Cons.NAVIGATION_NOTIFICATIONS:
                                 return new HomeFragment();
                             case Cons.NAVIGATION_USER:
-                                return new UserFragment();
+                                return UserFragment.newInstance(0);
                         }
                         throw new IllegalStateException("Invalid index.");
                     }

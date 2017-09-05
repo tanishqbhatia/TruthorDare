@@ -38,7 +38,7 @@ import butterknife.Unbinder;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class UserFragment extends Fragment {
+public class UserFragment extends BaseFragment {
 
     @BindView(R.id.profilePictureIv)
     SimpleDraweeView profilePictureIv;
@@ -63,6 +63,18 @@ public class UserFragment extends Fragment {
         // Required empty public constructor
     }
 
+    /* for creating new instance of a fragment
+    if (mFragmentNavigation != null) {
+                    mFragmentNavigation.pushFragment(RecentsFragment.newInstance(mInt+1));
+                }
+     */
+    public static UserFragment newInstance(int instance) {
+        Bundle args = new Bundle();
+        args.putInt(ARGS_INSTANCE, instance);
+        UserFragment fragment = new UserFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -95,6 +107,7 @@ public class UserFragment extends Fragment {
 
     @Subscribe(priority = 1, sticky = true, threadMode = ThreadMode.MAIN)
     public void onUserHeader(GetUser getUser) {
+        Methods.showLog("UserFragment", "onUserHeader()", getUser.getUser().getId());
         if (getUser != null) {
             User user = getUser.getUser();
             getActivity().setTitle(user.getUsername());
